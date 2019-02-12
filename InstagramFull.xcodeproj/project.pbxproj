@@ -7,17 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC0C87B122129E480059F5F1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0C87B022129E480059F5F1 /* LoginVC.swift */; };
+		BC0C87B42212A5B50059F5F1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0C87B32212A5B50059F5F1 /* Extensions.swift */; };
 		BCF74AB522118AC7001236A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF74AB422118AC7001236A9 /* AppDelegate.swift */; };
-		BCF74AB722118AC7001236A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF74AB622118AC7001236A9 /* ViewController.swift */; };
 		BCF74ABA22118AC7001236A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCF74AB822118AC7001236A9 /* Main.storyboard */; };
 		BCF74ABC22118AD7001236A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCF74ABB22118AD7001236A9 /* Assets.xcassets */; };
 		BCF74ABF22118AD7001236A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCF74ABD22118AD7001236A9 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC0C87B022129E480059F5F1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		BC0C87B32212A5B50059F5F1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BCF74AB122118AC7001236A9 /* InstagramFull.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstagramFull.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCF74AB422118AC7001236A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BCF74AB622118AC7001236A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BCF74AB922118AC7001236A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BCF74ABB22118AD7001236A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BCF74ABE22118AD7001236A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -35,6 +37,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BC0C87AD22129CC50059F5F1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BC0C87B022129E480059F5F1 /* LoginVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC0C87AE22129CD30059F5F1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BC0C87AF22129CDB0059F5F1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BC0C87B22212A5890059F5F1 /* Utis */ = {
+			isa = PBXGroup;
+			children = (
+				BC0C87B32212A5B50059F5F1 /* Extensions.swift */,
+			);
+			path = Utis;
+			sourceTree = "<group>";
+		};
 		BCF74AA822118AC7001236A9 = {
 			isa = PBXGroup;
 			children = (
@@ -54,8 +86,11 @@
 		BCF74AB322118AC7001236A9 /* InstagramFull */ = {
 			isa = PBXGroup;
 			children = (
+				BC0C87B22212A5890059F5F1 /* Utis */,
+				BC0C87AF22129CDB0059F5F1 /* Model */,
+				BC0C87AE22129CD30059F5F1 /* View */,
+				BC0C87AD22129CC50059F5F1 /* Controller */,
 				BCF74AB422118AC7001236A9 /* AppDelegate.swift */,
-				BCF74AB622118AC7001236A9 /* ViewController.swift */,
 				BCF74AB822118AC7001236A9 /* Main.storyboard */,
 				BCF74ABB22118AD7001236A9 /* Assets.xcassets */,
 				BCF74ABD22118AD7001236A9 /* LaunchScreen.storyboard */,
@@ -135,7 +170,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCF74AB722118AC7001236A9 /* ViewController.swift in Sources */,
+				BC0C87B122129E480059F5F1 /* LoginVC.swift in Sources */,
+				BC0C87B42212A5B50059F5F1 /* Extensions.swift in Sources */,
 				BCF74AB522118AC7001236A9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
