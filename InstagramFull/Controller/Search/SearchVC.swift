@@ -69,7 +69,7 @@ class SearchVC: UITableViewController {
         
     }
     
-    //Handlers
+    //MARK : - Handlers
     
         func configureNavControllers() {
         self.navigationItem.title = "Search"
@@ -77,7 +77,7 @@ class SearchVC: UITableViewController {
     }
     
     
-    //MARK : API
+    //MARK: - API
     
     func fetchUser() {
         Database.database().reference().child("users").observe(.childAdded) { (snapshot) in

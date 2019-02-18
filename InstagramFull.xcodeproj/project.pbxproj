@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		628A3CC81AE76E2CF9403B0D /* Pods_InstagramFull.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A616A39A45573957BC893C /* Pods_InstagramFull.framework */; };
+		BC07AF5F221B34360039ED43 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC07AF5E221B34360039ED43 /* Protocols.swift */; };
 		BC0A174122144EB200669F98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC0A174022144EB200669F98 /* GoogleService-Info.plist */; };
 		BC0C87B122129E480059F5F1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0C87B022129E480059F5F1 /* LoginVC.swift */; };
 		BC0C87B42212A5B50059F5F1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0C87B32212A5B50059F5F1 /* Extensions.swift */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		57D6DC47156BA6F04A7D0D9D /* Pods-InstagramFull.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramFull.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstagramFull/Pods-InstagramFull.debug.xcconfig"; sourceTree = "<group>"; };
 		90A616A39A45573957BC893C /* Pods_InstagramFull.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramFull.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC07AF5E221B34360039ED43 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		BC0A174022144EB200669F98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BC0C87B022129E480059F5F1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		BC0C87B32212A5B50059F5F1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			children = (
 				BC0C87B32212A5B50059F5F1 /* Extensions.swift */,
 				BCB5D7762219C431006E66F5 /* Constants.swift */,
+				BC07AF5E221B34360039ED43 /* Protocols.swift */,
 			);
 			path = Utis;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC07AF5F221B34360039ED43 /* Protocols.swift in Sources */,
 				BCF8CB462216D65700022212 /* UserProfileHeader.swift in Sources */,
 				BCD82735221551AA0030B81E /* FeedVC.swift in Sources */,
 				BCD8273B221551FB0030B81E /* NotificationVC.swift in Sources */,
