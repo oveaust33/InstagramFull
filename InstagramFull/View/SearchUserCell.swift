@@ -55,7 +55,7 @@ class SearchUserCell: UITableViewCell {
         textLabel?.frame = CGRect(x: 68, y: (textLabel?.frame.origin.y)! - 2, width: (textLabel?.frame.width)!, height: (textLabel?.frame.height)!)
         textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         
-        detailTextLabel?.frame = CGRect(x: 68, y: (detailTextLabel?.frame.origin.y)! - 2, width: (self.frame.width) - 108, height: (detailTextLabel?.frame.height)!)
+        detailTextLabel?.frame = CGRect(x: 68, y: detailTextLabel!.frame.origin.y, width: (self.frame.width) - 108, height: (detailTextLabel?.frame.height)!)
         detailTextLabel?.font = UIFont.systemFont(ofSize: 12)
         detailTextLabel?.textColor = .lightGray
 

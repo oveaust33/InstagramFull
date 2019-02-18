@@ -12,4 +12,6 @@ protocol UserProfileHeaderDelegate {
     
     func handleEditFollowTapped(for header : UserProfileHeader)
     func setUserStats (for header : UserProfileHeader)
+    func handleFollowerTapped(for header : UserProfileHeader)
+    func handleFollowingTapped(for header : UserProfileHeader)
 }

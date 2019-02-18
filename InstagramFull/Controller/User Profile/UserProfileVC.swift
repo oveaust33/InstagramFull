@@ -96,8 +96,24 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
     
     //  MARK: - UserProfileHeader Protocol
     
-    func handleEditFollowTapped(for header: UserProfileHeader) {
+    func handleFollowerTapped(for header : UserProfileHeader){
         
+        let followVC = FollowVC()
+        followVC.viewFollowers = true
+        
+        navigationController?.pushViewController(followVC, animated: true)
+        
+    }
+    
+    func handleFollowingTapped(for header: UserProfileHeader) {
+        let followVC = FollowVC()
+        followVC.viewFollowing = true
+        navigationController?.pushViewController(followVC, animated: true)
+    }
+    
+    
+    
+    func handleEditFollowTapped(for header: UserProfileHeader) {
         
         guard let user = header.user else {return}
         

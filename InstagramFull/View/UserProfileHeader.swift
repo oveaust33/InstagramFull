@@ -68,22 +68,43 @@ class UserProfileHeader: UICollectionViewCell {
         return label
     }()
     
-    let followersLabel : UILabel = {
+    lazy var followersLabel : UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
         
+        let attributedText = NSMutableAttributedString(string: " \n", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
+        attributedText.append(NSAttributedString(string: "followers", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor : UIColor.lightGray.cgColor]))
+        label.attributedText = attributedText
+        
+        //add gesture recognizer
+        
+        let followTap = UITapGestureRecognizer(target: self, action: #selector(handleFollowersTapped))
+        followTap.numberOfTapsRequired = 1
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(followTap)
+        
+        
+        
         return label
     }()
     
-    let follwingLabel : UILabel = {
+    lazy var follwingLabel : UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
-        let attributedText = NSMutableAttributedString(string: "5\n", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
+        
+        let attributedText = NSMutableAttributedString(string: " \n", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
         attributedText.append(NSAttributedString(string: "following", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor : UIColor.lightGray.cgColor]))
         label.attributedText = attributedText
-
+        
+        //add gesture recognizer
+        
+        let followTap = UITapGestureRecognizer(target: self, action: #selector(handleFollowingTapped))
+        followTap.numberOfTapsRequired = 1
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(followTap)
+        
         
         
         return label
@@ -99,6 +120,7 @@ class UserProfileHeader: UICollectionViewCell {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(handleEditProfileFollow), for: .touchUpInside)
+        
 
         
         return button
@@ -134,6 +156,15 @@ class UserProfileHeader: UICollectionViewCell {
     
     //MARK: - HANDLERS
     
+    @objc func handleFollowingTapped(){
+        
+        delegate?.handleFollowingTapped(for: self)
+    }
+    
+    
+    @objc func handleFollowersTapped(){
+        delegate?.handleFollowerTapped(for: self)
+    }
     
     func configureBottomToolbar(){
         let topDividerView = UIView()
