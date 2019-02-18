@@ -56,13 +56,22 @@ class SearchVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = users[indexPath.row]
-        print("user name is \(user.userName ?? "okokok")")
+        
+        //create instance of UserProfileVC
+        let userProfileVC = UserProfileVC(collectionViewLayout : UICollectionViewFlowLayout())
+        
+        //Passes User from SearchVC to UserProfileVC
+        userProfileVC.userToLoadFromSearchVC = user
+                
+        //push View Controllers
+        navigationController?.pushViewController(userProfileVC, animated: true)
+        
         
     }
     
     //Handlers
     
-    func configureNavControllers() {
+        func configureNavControllers() {
         self.navigationItem.title = "Search"
         
     }
@@ -72,7 +81,8 @@ class SearchVC: UITableViewController {
     
     func fetchUser() {
         Database.database().reference().child("users").observe(.childAdded) { (snapshot) in
-            print(snapshot)
+            //childadded is to observe all the values in Database
+            //print(snapshot)
             
             //uid
             let uid = snapshot.key
@@ -89,7 +99,6 @@ class SearchVC: UITableViewController {
             //reload table view
             
                 self.tableView.reloadData()
-
             
         }
         
