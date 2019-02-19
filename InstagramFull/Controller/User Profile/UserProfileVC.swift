@@ -17,8 +17,7 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
     
     //MARK : Properties
     
-    var currentUser : User?
-    var userToLoadFromSearchVC : User?
+    var user : User?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +32,7 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         //change Background color
         self.collectionView.backgroundColor = .white
         
-        if userToLoadFromSearchVC == nil {
+        if self.user == nil {
             fetchUserCurrentData()
         }
         
@@ -71,14 +70,10 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         header.delegate = self
         
         //set the user in header
-        if let user = self.currentUser {
-            header.user = user
-        }
-        else if let userToLoadFromSearchVC = self.userToLoadFromSearchVC {
         
-            header.user = userToLoadFromSearchVC
-            navigationItem.title = userToLoadFromSearchVC.userName
-        }
+        header.user = self.user
+        navigationItem.title = user?.userName
+        
         
         return header
     }
@@ -100,7 +95,7 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         
         let followVC = FollowVC()
         followVC.viewFollowers = true
-        
+        followVC.uid = user?.uid
         navigationController?.pushViewController(followVC, animated: true)
         
     }
@@ -108,6 +103,7 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
     func handleFollowingTapped(for header: UserProfileHeader) {
         let followVC = FollowVC()
         followVC.viewFollowing = true
+        followVC.uid = user?.uid
         navigationController?.pushViewController(followVC, animated: true)
     }
     
@@ -183,7 +179,7 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         Database.database().reference().child("users").child(currentUID).observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionary = snapshot.value as? Dictionary <String , AnyObject> else {return}
             let user = User(uid: currentUID, dictionary: dictionary)
-            self.currentUser = user
+            self.user = user
             self.navigationItem.title = user.userName
             self.collectionView.reloadData()
         }

@@ -7,10 +7,57 @@
 //
 
 import UIKit
-
+import Firebase
 class FollowCell: UITableViewCell {
     
     //  MARK: - Properties
+    
+    var delegate : FollowCellDelegate?
+    
+    var user : User? {
+        
+        didSet {
+            
+            guard let profileImageURL = user?.profileImageURL else {return}
+            guard let userName = user?.userName else {return}
+            guard let fullName = user?.name else {return}
+            
+            profileImageView.loadImage(with: profileImageURL)
+            self.textLabel?.text = userName
+            self.detailTextLabel?.text = fullName
+            
+            //Hide follow button for Current user
+            if user?.uid == Auth.auth().currentUser?.uid {
+                self.followButton.isHidden = true
+            }
+            
+            user?.chekIfUserIsFollowed(completion: { (followed) in
+                if followed {
+                    
+                    //Config Follow button for followed user
+                    self.followButton.setTitle("Following", for: .normal)
+                    self.followButton.setTitleColor(.black, for: .normal)
+                    self.followButton.layer.borderWidth = 0.5
+                    self.followButton.layer.borderColor = UIColor.lightGray.cgColor
+                    self.followButton.backgroundColor = .white
+                    
+                }
+                    
+                else {
+                    
+                    //config follow button for non-followed user
+                    self.followButton.setTitle("Follow", for: .normal)
+                    self.followButton.setTitleColor(.black, for: .normal)
+                    self.followButton.layer.borderWidth = 0
+                    self.followButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
+
+
+                }
+            })
+            
+        }
+        
+    }
     
     let profileImageView : UIImageView = {
         let iv = UIImageView()
@@ -35,7 +82,7 @@ class FollowCell: UITableViewCell {
     //  MARK: - Handlers
     
     @objc func handleFollowTapped(){
-        print("Handle follow tapped here....")
+        delegate?.handleFollowTapped(for: self)
     }
     
 
@@ -60,6 +107,8 @@ class FollowCell: UITableViewCell {
         
         self.textLabel?.text = "Username"
         self.detailTextLabel?.text = "Full Name"
+        
+        self.selectionStyle = .none
 
     }
     
