@@ -19,7 +19,7 @@ class SelectImageVC : UICollectionViewController, UICollectionViewDelegateFlowLa
     var images = [UIImage]()
     var assets = [PHAsset]()
     var selectedImage : UIImage?
-    
+    var header : SelectPhotoHeader?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,8 +70,11 @@ class SelectImageVC : UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
+    
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! SelectPhotoHeader
+        
+        self.header = header
         
         if let selectedImage = self.selectedImage {
             
@@ -86,7 +89,6 @@ class SelectImageVC : UICollectionViewController, UICollectionViewDelegateFlowLa
                 
                 //request image
                 imageManager.requestImage(for: selectedAsset, targetSize: TargetSize, contentMode: .default, options: nil) { (image, info) in
-                    
                     
                     header.photoImageView.image = image
                     
@@ -122,6 +124,10 @@ class SelectImageVC : UICollectionViewController, UICollectionViewDelegateFlowLa
     
     @objc func handleNext(){
         print("Handle next Tapped ....")
+        let uploadPostVC = UploadPostVC()
+        uploadPostVC.selectedImage = self.header?.photoImageView.image //get the real pixel of image,we could use SelectedImage
+        navigationController?.pushViewController(uploadPostVC, animated: true)
+        
     }
     
     func configureNavigationButton(){
