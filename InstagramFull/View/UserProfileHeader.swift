@@ -198,9 +198,8 @@ class UserProfileHeader: UICollectionViewCell {
     }
     
     func setUserStats(for user : User?) {
-        
-        delegate?.setUserStats(for: self)
 
+        delegate?.setUserStats(for: self)
 
     }
     

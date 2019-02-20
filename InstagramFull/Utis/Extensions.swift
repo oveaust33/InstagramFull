@@ -38,6 +38,7 @@ extension UIView {
 
 
 var imageCache = [String : UIImage]()
+
 extension UIImageView {
     func loadImage(with urlString : String) {
         

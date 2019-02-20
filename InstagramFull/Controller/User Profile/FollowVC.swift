@@ -134,10 +134,7 @@ class FollowVC : UITableViewController , FollowCellDelegate {
                 })
 
             })
-            
-            
-            
-
+ 
         }
         
         

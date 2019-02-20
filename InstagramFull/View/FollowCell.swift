@@ -47,7 +47,7 @@ class FollowCell: UITableViewCell {
                     
                     //config follow button for non-followed user
                     self.followButton.setTitle("Follow", for: .normal)
-                    self.followButton.setTitleColor(.black, for: .normal)
+                    self.followButton.setTitleColor(.white, for: .normal)
                     self.followButton.layer.borderWidth = 0
                     self.followButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
 

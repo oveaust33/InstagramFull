@@ -35,10 +35,10 @@ class MainTabVC: UITabBarController, UITabBarControllerDelegate {
         let searchVC = constructNavController(unselectedImage: UIImage(named: "search_unselected")!, selectedImage: UIImage(named: "search_selected")!, rootViewCOntroller: SearchVC())
         
         
+       //Select Image Controller
+        let SelectImageVC = constructNavController(unselectedImage: UIImage(named: "plus_unselected")!, selectedImage: UIImage(named: "plus_unselected")!)
         
-        //Post COntroller
-        let uploadVC = constructNavController(unselectedImage: UIImage(named: "plus_unselected")!, selectedImage: UIImage(named: "plus_unselected")!, rootViewCOntroller: PostVC())
-        
+       
         //Notification Controller
         let notificationVC = constructNavController(unselectedImage: UIImage(named: "like_unselected")!, selectedImage: UIImage(named: "like_selected")!, rootViewCOntroller: NotificationVC())
         
@@ -46,11 +46,28 @@ class MainTabVC: UITabBarController, UITabBarControllerDelegate {
         let userProfileVC = constructNavController(unselectedImage: UIImage(named: "profile_unselected")!, selectedImage: UIImage(named: "profile_selected")!, rootViewCOntroller: UserProfileVC(collectionViewLayout : UICollectionViewFlowLayout()))
         
         //View COntrollers to be added to tab controller
-        viewControllers = [feedVC ,searchVC , uploadVC, notificationVC , userProfileVC ]
+        viewControllers = [feedVC ,searchVC , SelectImageVC, notificationVC , userProfileVC ]
         
         //tab bar tint color
         tabBar.tintColor = .black
         
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        let index = viewControllers?.index(of : viewController)
+        
+        if index == 2 {
+            let selectImageVC = SelectImageVC(collectionViewLayout : UICollectionViewFlowLayout())
+            let navController = UINavigationController(rootViewController: selectImageVC)
+            navController.navigationBar.tintColor = .black
+            
+            present(navController, animated: true, completion: nil)
+            
+            return false
+            
+        }
+        
+        return true
     }
     
     
