@@ -168,7 +168,7 @@ class SelectImageVC : UICollectionViewController, UICollectionViewDelegateFlowLa
             //enumerate objects
             allPhotos.enumerateObjects({ (asset, count, stop) in
                 
-                print("\(count) times")
+                //print("\(count) times")
                 
                 let imageManger = PHImageManager.default()
                 let targetSize = CGSize(width: 200, height: 200)

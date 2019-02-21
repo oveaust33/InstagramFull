@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Firebase
 
-class UploadPostVC: UIViewController {
+class UploadPostVC: UIViewController , UITextViewDelegate {
     
     //  Mark: - Properties
     
@@ -31,6 +32,7 @@ class UploadPostVC: UIViewController {
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.layer.cornerRadius = 5
         tv.layer.masksToBounds = true
+    
         
         return tv
     }()
@@ -41,6 +43,8 @@ class UploadPostVC: UIViewController {
         button.setTitle("Publish", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(handleSharePost), for: .touchUpInside)
+        button.isEnabled = false
         
         return button
     }()
@@ -49,6 +53,7 @@ class UploadPostVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        captionTextView.delegate = self
         
         view.backgroundColor = .white
         
@@ -60,7 +65,92 @@ class UploadPostVC: UIViewController {
 
     }
     
+    //  MARK: - UITextView
+    
+    func textViewDidChange(_ textView: UITextView) {
+        
+        guard !textView.text.isEmpty else {
+            
+            shareButton.isEnabled = false
+            shareButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
+            return
+        }
+        
+        shareButton.isEnabled = true
+        shareButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
+
+    }
+    
     //  MARK: - Handlers
+    
+    @objc func handleSharePost(){
+        
+        //parameters
+        
+        guard
+            let caption = captionTextView.text ,
+            let postImage = photoImageView.image ,
+            let currentUid = Auth.auth().currentUser?.uid else {return}
+        
+        
+        //Image Upload data
+        guard let uploadData = postImage.jpegData(compressionQuality: 0.5) else {return}
+        
+        //Creation Date
+        let creationDate = Int(NSDate().timeIntervalSince1970)
+        
+        //update Storege
+        
+        let fileName = NSUUID().uuidString
+        
+        //in order to get Download URLmust add filename to storage REF
+        let storageRef = Storage.storage().reference().child("post_images").child(fileName)
+        
+        //image URL
+        storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+            
+            //handle error
+            if let error = error {
+                print("Failed to upload image to firebase with error", error.localizedDescription)
+                return
+            }
+            
+            //success
+            storageRef.downloadURL(completion: { (downloadURL, error) in
+                guard let postImageUrl = downloadURL?.absoluteString else {
+                    print("Debug : Profile Image URL is nil")
+                    return
+                }
+                
+            //post Data
+            let values =    ["caption" : caption,
+                              "creationDate" : creationDate ,
+                              "likes" : 0,
+                              "imageUrl" : postImageUrl ,
+                              "ownerUid" : currentUid] as [String : Any]
+                
+                //post id
+                let postId = POSRTS_REF.childByAutoId()
+                
+                //upload info to database
+                postId.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                    //return to homeFeed
+                    self.dismiss(animated: true, completion: {
+                        self.tabBarController?.selectedIndex = 0
+                    })
+                })
+                
+                
+
+                
+                
+                
+                
+            })
+        })
+        
+        
+    }
     
     func configureViewComponents() {
         
