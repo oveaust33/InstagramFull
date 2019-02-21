@@ -92,15 +92,13 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
             let postImage = photoImageView.image ,
             let currentUid = Auth.auth().currentUser?.uid else {return}
         
-        
-        //Image Upload data
-        guard let uploadData = postImage.jpegData(compressionQuality: 0.5) else {return}
-        
         //Creation Date
         let creationDate = Int(NSDate().timeIntervalSince1970)
         
+        //Image Upload data
+        guard let uploadData = postImage.jpegData(compressionQuality: 0.5) else {return}
+      
         //update Storege
-        
         let fileName = NSUUID().uuidString
         
         //in order to get Download URLmust add filename to storage REF
@@ -123,17 +121,24 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
                 }
                 
             //post Data
-            let values =    ["caption" : caption,
-                              "creationDate" : creationDate ,
-                              "likes" : 0,
-                              "imageUrl" : postImageUrl ,
-                              "ownerUid" : currentUid] as [String : Any]
+            let values =    ["caption"        : caption      ,
+                              "creationDate"  : creationDate ,
+                              "likes"         : 0            ,
+                              "imageUrl"      : postImageUrl ,
+                              "ownerUid"      : currentUid]    as [String : Any]
                 
                 //post id
-                let postId = POSRTS_REF.childByAutoId()
+                let postId = POSTS_REF.childByAutoId()
+                
+                guard let postKey = postId.key else { return }
+                
+                //update USER-POST structure
+                USER_POSTS_REF.child(currentUid).updateChildValues([postKey : 1])
                 
                 //upload info to database
                 postId.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                    
+
                     //return to homeFeed
                     self.dismiss(animated: true, completion: {
                         self.tabBarController?.selectedIndex = 0
@@ -141,15 +146,8 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
                 })
                 
                 
-
-                
-                
-                
-                
             })
         })
-        
-        
     }
     
     func configureViewComponents() {

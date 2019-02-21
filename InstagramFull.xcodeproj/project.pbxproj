@@ -14,6 +14,7 @@
 		BC0A174122144EB200669F98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC0A174022144EB200669F98 /* GoogleService-Info.plist */; };
 		BC0C87B122129E480059F5F1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0C87B022129E480059F5F1 /* LoginVC.swift */; };
 		BC0C87B42212A5B50059F5F1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0C87B32212A5B50059F5F1 /* Extensions.swift */; };
+		BC1C72A5221EE1C2002E18D4 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1C72A4221EE1C2002E18D4 /* Post.swift */; };
 		BC361017221D837500C07713 /* UploadPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC361016221D837500C07713 /* UploadPostVC.swift */; };
 		BC361019221D843B00C07713 /* SelectImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC361018221D843B00C07713 /* SelectImageVC.swift */; };
 		BC36101B221D84EA00C07713 /* SelectPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC36101A221D84EA00C07713 /* SelectPhotoCell.swift */; };
@@ -43,6 +44,7 @@
 		BC0A174022144EB200669F98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BC0C87B022129E480059F5F1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		BC0C87B32212A5B50059F5F1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		BC1C72A4221EE1C2002E18D4 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		BC361016221D837500C07713 /* UploadPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostVC.swift; sourceTree = "<group>"; };
 		BC361018221D843B00C07713 /* SelectImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageVC.swift; sourceTree = "<group>"; };
 		BC36101A221D84EA00C07713 /* SelectPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoCell.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				BCF3B02122172C4C00736307 /* User.swift */,
+				BC1C72A4221EE1C2002E18D4 /* Post.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				BCEA0604221883B300D7B93E /* SearchUserCell.swift in Sources */,
 				BCD8273D221552150030B81E /* UserProfileVC.swift in Sources */,
 				BC0C87B122129E480059F5F1 /* LoginVC.swift in Sources */,
+				BC1C72A5221EE1C2002E18D4 /* Post.swift in Sources */,
 				BC361017221D837500C07713 /* UploadPostVC.swift in Sources */,
 				BC0C87B42212A5B50059F5F1 /* Extensions.swift in Sources */,
 				BC07AF63221B526C0039ED43 /* FollowCell.swift in Sources */,
