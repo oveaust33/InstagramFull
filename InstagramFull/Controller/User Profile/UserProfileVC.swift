@@ -24,7 +24,7 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         super.viewDidLoad()
         
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(UserPostCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         self.collectionView.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerIdentifier)
         
@@ -43,19 +43,15 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
 
 
     }
-
     
-    // MARK: - UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+    // MARK: - UICollectionView FlowLayout
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
-
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
     }
     
     // Profile UI header size and width
@@ -63,6 +59,28 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         
         return CGSize(width: view.frame.width, height: 200)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (view.frame.width - 2)/3
+        return CGSize(width: width, height: width)
+    }
+    
+    
+
+    
+    // MARK: - UICollectionViewDataSource
+
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return posts.count
+    }
+    
+
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
@@ -83,11 +101,12 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! UserPostCell
     
         // Configure the cell
         
-        
+        cell.post = posts[indexPath.item]
     
         return cell
     }
@@ -178,8 +197,16 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
     
     func fetchPost() {
         
-        guard let currentUid = Auth.auth().currentUser?.uid else {return}
-        USER_POSTS_REF.child(currentUid).observe(.childAdded) { (snapshot) in
+        var uid : String!
+        
+        if let user = self.user {
+            uid = user.uid
+        } else {
+            
+            uid = Auth.auth().currentUser?.uid
+        }
+        
+        USER_POSTS_REF.child(uid).observe(.childAdded) { (snapshot) in
             
             let postId = snapshot.key // posts by me
             
@@ -191,8 +218,13 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
                 
                 let post = Post(postId: postId, dictionary: dictionary)
                 self.posts.append(post)
+                self.posts.sort(by: { (post1, post2) -> Bool in
+                    return post1.creationDate > post2.creationDate
+                })
                 
-                print("post caption is \(post.caption)")
+               // print("post caption is \(post.caption)")
+                
+                self.collectionView.reloadData()
                 
                 
             })
