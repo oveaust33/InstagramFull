@@ -7,11 +7,39 @@
 //
 
 import UIKit
+import Firebase
 
 
 class Feedcell: UICollectionViewCell {
     
     //  MARK: - properties
+    
+    var post :Post? {
+        
+        didSet {
+            
+            guard let ownerUid = post?.ownerUid else {return}
+            guard let imageUrl = post?.imageUrl else {return}
+            guard let likes = post?.likes else {return}
+            
+            Database.fetchUser(with: ownerUid) { (user) in
+                
+                self.profileImageView.loadImage(with: user.profileImageURL)
+                self.userNameButton.setTitle(user.userName, for: .normal)
+                self.configurePostCaption(user: user)
+            }
+            
+            self.postImageView.loadImage(with: imageUrl)
+            self.likesLabel.text = ("\(likes) likes")
+            
+            
+            
+            
+        }
+        
+    }
+    
+    
     let profileImageView : CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
@@ -152,6 +180,19 @@ class Feedcell: UICollectionViewCell {
     }
     
     //  MARK: - Handlers
+    
+    func configurePostCaption(user: User) {
+        
+        guard let post = self.post else {return}
+        guard let caption = post.caption else {return}
+        
+        let attributedText = NSMutableAttributedString(string: user.userName , attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12)])
+        attributedText.append(NSAttributedString(string: " \(caption)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12)]))
+        
+        captionLabel.attributedText = attributedText
+        
+        
+    }
     
     func configureActionButton(){
         

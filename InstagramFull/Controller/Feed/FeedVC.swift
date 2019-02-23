@@ -14,6 +14,8 @@ private let reuseIdentifier = "Cell"
 class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     
     //MARK: - Properties
+    
+    var posts = [Post]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,10 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout {
 
         // Register cell classes
         self.collectionView!.register(Feedcell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        //fetch posts
+        fetchPosts()
+        
         
 
     }
@@ -47,14 +53,14 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout {
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return posts.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! Feedcell
+        cell.post = posts[indexPath.item]
         
-    
-    
+        
         return cell
     }
     
@@ -103,6 +109,33 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout {
         
         //presennt alert controller
         self.present(alertController, animated: true, completion: nil)
+        
+    }
+    
+    // MARK: - API
+    
+    func fetchPosts(){
+        
+        POSTS_REF.observe(.childAdded) { (snapshot) in
+            //print(snapshot) ALL posts in DATABASE
+            
+            let postId = snapshot.key
+            
+            guard let dictionary = snapshot.value as? Dictionary<String , AnyObject> else {return}
+            
+            let post = Post(postId: postId, dictionary: dictionary)
+            
+            self.posts.append(post)
+            
+            self.posts.sort(by: { (post1, post2) -> Bool in
+                return post1.creationDate > post2.creationDate
+            })
+            
+//            print("post caption is  \(post.caption)\n")
+            
+            self.collectionView.reloadData()
+            
+        }
         
     }
 
