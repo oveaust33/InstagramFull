@@ -1,0 +1,170 @@
+//
+//  Feedcell.swift
+//  InstagramFull
+//
+//  Created by Iftiquar Ahmed  on 2/23/19.
+//  Copyright © 2019 Iftiquar Ahmed . All rights reserved.
+//
+
+import UIKit
+
+
+class Feedcell: UICollectionViewCell {
+    
+    //  MARK: - properties
+    let profileImageView : CustomImageView = {
+        let iv = CustomImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.backgroundColor = .lightGray
+        
+        return iv
+    }()
+    
+    let userNameButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("username", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        
+        return button
+        
+    }()
+    
+    let optionsButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("•••", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        
+        
+        return button
+ 
+    }()
+    
+    let postImageView : CustomImageView = {
+        let iv = CustomImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.backgroundColor = .lightGray
+        
+        return iv
+    }()
+    
+    let likeButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "like_unselected"), for: .normal)
+        button.tintColor = .black
+        
+        return button
+        
+    }()
+    
+    let commentButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "comment"), for: .normal)
+        button.tintColor = .black
+        
+        return button
+        
+    }()
+    
+    let messageButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "send2"), for: .normal)
+        button.tintColor = .black
+        
+        return button
+        
+    }()
+    
+    let savePostButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "ribbon"), for: .normal)
+        button.tintColor = .black
+        
+        return button
+    }()
+    
+    let likesLabel : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.textColor = .black
+        label.text = "3 Likes"
+        return label
+    }()
+    
+    let captionLabel : UILabel = {
+        let label = UILabel()
+        let attributedText = NSMutableAttributedString(string: "username ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12)])
+        attributedText.append(NSAttributedString(string: "Some text caption for now", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12)]))
+        label.attributedText = attributedText
+        
+        return label
+    }()
+    
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.text = "2 days ago"
+        return label
+    }()
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame : frame)
+   
+        addSubview(profileImageView)
+        profileImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft:8, paddingBottom: 0, paddingRight: 0, width: 45, height: 45)
+        profileImageView.layer.cornerRadius = 45/2
+        
+        
+        addSubview(userNameButton)
+        userNameButton.anchor(top: nil, left: profileImageView.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        userNameButton.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+        
+        addSubview(optionsButton)
+        optionsButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
+        optionsButton.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+        
+        addSubview(postImageView)
+        postImageView.anchor(top: profileImageView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        postImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
+        
+        //call StackView
+        configureActionButton()
+        
+        addSubview(savePostButton)
+        savePostButton.anchor(top: postImageView.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 20, height: 24)
+        
+        addSubview(likesLabel)
+        likesLabel.anchor(top: likeButton.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: -4, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        addSubview(captionLabel)
+        captionLabel.anchor(top: likesLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
+        
+        addSubview(timeLabel)
+        timeLabel.anchor(top: captionLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        
+        
+    }
+    
+    //  MARK: - Handlers
+    
+    func configureActionButton(){
+        
+        let stackView = UIStackView(arrangedSubviews: [likeButton , commentButton , messageButton])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        addSubview(stackView)
+        stackView.anchor(top: postImageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 120, height: 50)
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}

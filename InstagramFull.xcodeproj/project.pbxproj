@@ -35,6 +35,7 @@
 		BCF74ABC22118AD7001236A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCF74ABB22118AD7001236A9 /* Assets.xcassets */; };
 		BCF74ABF22118AD7001236A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCF74ABD22118AD7001236A9 /* LaunchScreen.storyboard */; };
 		BCF8CB462216D65700022212 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF8CB452216D65700022212 /* UserProfileHeader.swift */; };
+		BCFD73CB2221A99600455576 /* Feedcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFD73CA2221A99600455576 /* Feedcell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		BCF74ABE22118AD7001236A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BCF74AC022118AD7001236A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCF8CB452216D65700022212 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		BCFD73CA2221A99600455576 /* Feedcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedcell.swift; sourceTree = "<group>"; };
 		F7E27BCFFE0560441C209D85 /* Pods-InstagramFull.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramFull.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstagramFull/Pods-InstagramFull.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +126,7 @@
 				BC36101A221D84EA00C07713 /* SelectPhotoCell.swift */,
 				BC36101C221D853B00C07713 /* SelectPhotoHeader.swift */,
 				BC1C72A6221F29F8002E18D4 /* UserPostCell.swift */,
+				BCFD73CA2221A99600455576 /* Feedcell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				BCEA0604221883B300D7B93E /* SearchUserCell.swift in Sources */,
 				BC1C72A7221F29F8002E18D4 /* UserPostCell.swift in Sources */,
 				BCD8273D221552150030B81E /* UserProfileVC.swift in Sources */,
+				BCFD73CB2221A99600455576 /* Feedcell.swift in Sources */,
 				BC0C87B122129E480059F5F1 /* LoginVC.swift in Sources */,
 				BC1C72A5221EE1C2002E18D4 /* Post.swift in Sources */,
 				BC361017221D837500C07713 /* UploadPostVC.swift in Sources */,
@@ -530,7 +534,9 @@
 			baseConfigurationReference = 57D6DC47156BA6F04A7D0D9D /* Pods-InstagramFull.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = InstagramFull/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -538,6 +544,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ove.InstagramFull;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -548,7 +555,9 @@
 			baseConfigurationReference = F7E27BCFFE0560441C209D85 /* Pods-InstagramFull.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = InstagramFull/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -556,6 +565,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ove.InstagramFull;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
