@@ -14,6 +14,8 @@ class Feedcell: UICollectionViewCell {
     
     //  MARK: - properties
     
+    var delegate : FeedCellDelegate?
+    
     var post :Post? {
         
         didSet {
@@ -49,22 +51,23 @@ class Feedcell: UICollectionViewCell {
         return iv
     }()
     
-    let userNameButton : UIButton = {
+    lazy var userNameButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("username", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleUserNameTapped), for: .touchUpInside)
         
         return button
         
     }()
     
-    let optionsButton : UIButton = {
+    lazy var optionsButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("•••", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        
+        button.addTarget(self, action: #selector(handleOptionsTapped), for: .touchUpInside)
         
         return button
  
@@ -79,18 +82,20 @@ class Feedcell: UICollectionViewCell {
         return iv
     }()
     
-    let likeButton : UIButton = {
+    lazy var likeButton : UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "like_unselected"), for: .normal)
+        button.addTarget(self, action: #selector(handleLikeTapped), for: .touchUpInside)
         button.tintColor = .black
         
         return button
         
     }()
     
-    let commentButton : UIButton = {
+    lazy var commentButton : UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "comment"), for: .normal)
+        button.addTarget(self, action: #selector(handleCommentTapped), for: .touchUpInside)
         button.tintColor = .black
         
         return button
@@ -180,6 +185,30 @@ class Feedcell: UICollectionViewCell {
     }
     
     //  MARK: - Handlers
+    
+    @objc func handleUserNameTapped(){
+        
+        delegate?.handleUserNameTappe(for: self)
+    
+    }
+    
+    @objc func handleOptionsTapped(){
+        
+        delegate?.handleOptionsTapped(for: self)
+        
+    }
+    
+    @objc func handleLikeTapped(){
+        
+        delegate?.handleLikeTapped(for: self)
+        
+    }
+    
+    @objc func handleCommentTapped(){
+        
+        delegate?.handleCommentTapped(for: self)
+        
+    }
     
     func configurePostCaption(user: User) {
         

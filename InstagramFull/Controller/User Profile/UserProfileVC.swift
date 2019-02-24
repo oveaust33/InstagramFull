@@ -210,24 +210,17 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
             
             let postId = snapshot.key // posts by me
             
-            POSTS_REF.child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                //snapshot holo amar post jegula oiguar Json
-                
-                guard let dictionary = snapshot.value as? Dictionary<String, AnyObject> else {return}
-                
-                let post = Post(postId: postId, dictionary: dictionary)
+            Database.fetchPost(with: postId, completion: { (post) in
                 self.posts.append(post)
                 self.posts.sort(by: { (post1, post2) -> Bool in
                     return post1.creationDate > post2.creationDate
                 })
                 
-               // print("post caption is \(post.caption)")
+                // print("post caption is \(post.caption)")
                 
                 self.collectionView.reloadData()
-                
-                
             })
+
             
         }
         

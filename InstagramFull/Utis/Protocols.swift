@@ -20,3 +20,12 @@ protocol FollowCellDelegate {
     
     func handleFollowTapped(for cell : FollowCell )
 }
+
+protocol FeedCellDelegate {
+    
+    func handleUserNameTappe(for cell : Feedcell)
+    func handleOptionsTapped(for cell : Feedcell)
+    func handleLikeTapped(for cell : Feedcell)
+    func handleCommentTapped(for cell : Feedcell)
+    
+}

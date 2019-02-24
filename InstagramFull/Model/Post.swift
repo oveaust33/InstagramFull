@@ -17,9 +17,11 @@ class Post {
     var ownerUid : String!
     var creationDate : Date!
     var postId : String!
+    var user : User?
     
-    init(postId : String! , dictionary : Dictionary<String , AnyObject>) {
+    init(postId : String! , user : User , dictionary : Dictionary<String , AnyObject>) {
         
+        self.user = user
         self.postId = postId
         
         if let caption = dictionary["caption"] as? String {

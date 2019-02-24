@@ -11,7 +11,9 @@ import Firebase
 
 private let reuseIdentifier = "Cell"
 
-class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout {
+class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , FeedCellDelegate {
+
+    
     
     //MARK: - Properties
     
@@ -58,12 +60,42 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! Feedcell
+        cell.delegate = self
         cell.post = posts[indexPath.item]
         
         
         return cell
     }
     
+    //  MARK: - Feed Cell Delegates
+    
+    func handleUserNameTappe(for cell: Feedcell) {
+        
+        guard let post = cell.post else {return}
+        
+        let userProfileVC = UserProfileVC(collectionViewLayout : UICollectionViewFlowLayout())
+        
+        userProfileVC.user = post.user
+        
+        navigationController?.pushViewController(userProfileVC, animated: true)
+        
+        
+    }
+    
+    func handleOptionsTapped(for cell: Feedcell) {
+        print("User options Tapped")
+
+    }
+    
+    func handleLikeTapped(for cell: Feedcell) {
+        print("User like Tapped")
+
+    }
+    
+    func handleCommentTapped(for cell: Feedcell) {
+        print("User comment Tapped")
+
+    }
     
 
     // MARK: - Handlers
@@ -121,24 +153,16 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout {
             
             let postId = snapshot.key
             
-            guard let dictionary = snapshot.value as? Dictionary<String , AnyObject> else {return}
-            
-            let post = Post(postId: postId, dictionary: dictionary)
-            
-            self.posts.append(post)
-            
-            self.posts.sort(by: { (post1, post2) -> Bool in
-                return post1.creationDate > post2.creationDate
+            Database.fetchPost(with: postId, completion: { (post) in
+                self.posts.append(post)
+                
+                self.posts.sort(by: { (post1, post2) -> Bool in
+                    return post1.creationDate > post2.creationDate
+                })
+                
+                //print("post caption is  \(post.caption)\n")
+                self.collectionView.reloadData()
             })
-            
-//            print("post caption is  \(post.caption)\n")
-            
-            self.collectionView.reloadData()
-            
         }
-        
     }
-
-   
-
 }
