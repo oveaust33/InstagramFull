@@ -34,9 +34,8 @@ class Feedcell: UICollectionViewCell {
             self.postImageView.loadImage(with: imageUrl)
             self.likesLabel.text = ("\(likes) likes")
             
-            
-            
-            
+            configureLikeButton()
+
         }
         
     }
@@ -119,11 +118,19 @@ class Feedcell: UICollectionViewCell {
         return button
     }()
     
-    let likesLabel : UILabel = {
+    lazy var likesLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.textColor = .black
         label.text = "3 Likes"
+        
+        //add gesture recognizer
+        let likeTap = UITapGestureRecognizer(target: self, action: #selector(handleShowLikes))
+        likeTap.numberOfTapsRequired = 1
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(likeTap)
+        
+        
         return label
     }()
     
@@ -207,6 +214,17 @@ class Feedcell: UICollectionViewCell {
     @objc func handleCommentTapped(){
         
         delegate?.handleCommentTapped(for: self)
+        
+    }
+    
+    @objc func handleShowLikes(){
+        
+        delegate?.handleShowLikes(for: self)
+        
+    }
+    
+    func configureLikeButton(){
+        delegate?.handleConfigureLikeButton(for: self)
         
     }
     

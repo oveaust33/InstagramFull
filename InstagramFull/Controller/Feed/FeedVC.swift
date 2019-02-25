@@ -14,7 +14,6 @@ private let reuseIdentifier = "Cell"
 class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , FeedCellDelegate {
 
     
-    
     //MARK: - Properties
     
     var posts = [Post]()
@@ -113,9 +112,63 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     }
     
     func handleLikeTapped(for cell: Feedcell) {
-        print("User like Tapped")
-
+        
+        guard let post = cell.post else {return}
+        
+        if post.didLike{
+            post.adjustLikes(addLike: false) { (likes) in
+                
+                cell.likesLabel.text = "\(likes) likes"
+                cell.likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+                cell.likeButton.tintColor = .black
+               
+                
+            }
+            
+        } else {
+            post.adjustLikes(addLike: true) { (likes) in
+                
+                cell.likesLabel.text = "\(likes) likes"
+                cell.likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
+                cell.likeButton.tintColor = .red
+            }
+        }
     }
+    
+    
+    func handleShowLikes(for cell: Feedcell) {
+        print("handle show likes")
+    }
+    
+    
+    
+    
+    func handleConfigureLikeButton(for cell : Feedcell) {
+        guard let currenUid = Auth.auth().currentUser?.uid else {return}
+        guard let post = cell.post else {return}
+        guard let postId = post.postId else {return}
+        
+        
+        USER_LIKES_REF.child(currenUid).observeSingleEvent(of: .value) { (snapshot) in
+            
+            if snapshot.hasChild(postId) {
+                
+                post.didLike = true
+                cell.likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
+                cell.likeButton.tintColor = .red
+                
+            } else {
+                post.didLike = false
+                cell.likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+                cell.likeButton.tintColor = .black
+                
+                
+                
+            }
+        }
+        
+    }
+
     
     func handleCommentTapped(for cell: Feedcell) {
         print("User comment Tapped")
@@ -136,6 +189,22 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
         
         print("Handle Messages...")
     }
+    
+//    func updateLikeStructures(with postId: String , addLike : Bool){
+//
+//        guard let currentUid = Auth.auth().currentUser?.uid else {return}
+//
+//        if addLike{
+//
+//
+//
+//        } else {
+//
+//
+//        }
+//
+//
+//    }
     
     func configureNavigationBar(){
         
