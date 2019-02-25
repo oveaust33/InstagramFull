@@ -111,6 +111,17 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let feedVC = FeedVC(collectionViewLayout : UICollectionViewFlowLayout())
+        feedVC.viewSinglePost = true
+        
+        feedVC.post = posts[indexPath.item]
+        
+        navigationController?.pushViewController(feedVC, animated: true)
+   
+    }
+    
     
     //  MARK: - UserProfileHeader Protocol
     

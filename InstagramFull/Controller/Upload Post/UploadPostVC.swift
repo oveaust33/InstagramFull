@@ -83,6 +83,25 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
     
     //  MARK: - Handlers
     
+    func updateUserFeeds(with postId : String){
+        
+        // current user id
+        guard let currentUid = Auth.auth().currentUser?.uid else {return}
+        
+        // database values
+        let values = [postId : 1]
+        
+        //update follower feed
+        USER_FOLLOWER_REF.child(currentUid).observe(.childAdded) { (snapshot) in
+            let followerUid = snapshot.key
+            USER_FEED_REF.child(followerUid).updateChildValues(values)
+        }
+        
+        // update current user feed
+        USER_FEED_REF.child(currentUid).updateChildValues(values)
+        
+    }
+    
     @objc func handleSharePost(){
         
         //parameters
@@ -134,6 +153,9 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
                 
                 //update USER-POST structure
                 USER_POSTS_REF.child(currentUid).updateChildValues([postKey : 1])
+                
+                //update feed structure
+                self.updateUserFeeds(with: postKey)
                 
                 //upload info to database
                 postId.updateChildValues(values, withCompletionBlock: { (error, ref) in

@@ -8,7 +8,7 @@
 import Firebase
 class User {
     
-    //Attributes
+    //Mark: - Attributes
     var userName : String!
     var name : String!
     var profileImageURL : String!
@@ -47,6 +47,12 @@ class User {
         
         //add current user to followed user-follower structure
         USER_FOLLOWER_REF.child(uid).updateChildValues([currentUid : 1])
+        
+        // add following user's post in feed VC
+        USER_POSTS_REF.child(self.uid).observe(.childAdded) { (snapshot) in
+            let postId = snapshot.key
+            USER_FEED_REF.child(currentUid).updateChildValues([postId : 1])
+        }
        
     }
     
@@ -62,6 +68,14 @@ class User {
         
         //remove user from user-follower structure
         USER_FOLLOWER_REF.child(uid).child(currentUid).removeValue()
+        
+        //remove unfollowed user post from FEED VC
+        USER_POSTS_REF.child(self.uid).observe(.childAdded) { (snapshot) in
+            
+            let postId = snapshot.key
+            USER_FEED_REF.child(currentUid).child(postId).removeValue()
+            
+        }
         
     }
     

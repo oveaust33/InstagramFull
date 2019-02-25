@@ -18,6 +18,8 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     //MARK: - Properties
     
     var posts = [Post]()
+    var viewSinglePost = false
+    var post : Post?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +32,17 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
         // Register cell classes
         self.collectionView!.register(Feedcell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        //fetch posts
-        fetchPosts()
+        // configure refresh control
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
         
+        //fetch posts
+        if !viewSinglePost {
+            self.fetchPosts()
+        }
+        
+        updateUserFeeds()
         
 
     }
@@ -55,15 +65,30 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return posts.count
+        
+        if viewSinglePost{
+            
+            return 1
+        }
+        else {
+            
+            return posts.count
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! Feedcell
         cell.delegate = self
-        cell.post = posts[indexPath.item]
         
-        
+        if viewSinglePost {
+            if let post = self.post {
+                cell.post = post
+            }
+        }   else {
+                cell.post = posts[indexPath.item]
+            }
+  
         return cell
     }
     
@@ -100,6 +125,12 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
 
     // MARK: - Handlers
     
+    @objc func handleRefresh(){
+        posts.removeAll(keepingCapacity: false)
+        fetchPosts()
+        collectionView.reloadData()
+    }
+    
     
     @objc func handleShowMessages() {
         
@@ -107,7 +138,13 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     }
     
     func configureNavigationBar(){
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogOut))
+        
+        if !viewSinglePost {
+            
+              self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogOut))
+            
+        }
+      
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "send2"), style: .plain, target: self, action: #selector(handleShowMessages))
         
@@ -146,10 +183,38 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     
     // MARK: - API
     
+    func updateUserFeeds(){
+        
+        //update with following people's post
+        
+        guard let currentUid = Auth.auth().currentUser?.uid else {return}
+        USER_FOLLOWING_REF.child(currentUid).observe(.childAdded) { (snapshot) in
+            
+            let followingUserId = snapshot.key
+            
+            USER_POSTS_REF.child(followingUserId).observe(.childAdded, with: { (snapshot) in
+                
+                let postId = snapshot.key
+                
+                USER_FEED_REF.child(currentUid).updateChildValues([postId : 1])
+            })
+        }
+        
+        //update with own posts
+        
+        USER_POSTS_REF.child(currentUid).observe(.childAdded) { (snapshot) in
+            
+            let postId = snapshot.key
+            USER_FEED_REF.child(currentUid).updateChildValues([postId : 1])
+            
+        }
+    }
+    
     func fetchPosts(){
         
-        POSTS_REF.observe(.childAdded) { (snapshot) in
-            //print(snapshot) ALL posts in DATABASE
+        guard let currenUid = Auth.auth().currentUser?.uid else {return}
+        
+        USER_FEED_REF.child(currenUid).observe(.childAdded) { (snapshot) in
             
             let postId = snapshot.key
             
@@ -160,7 +225,10 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
                     return post1.creationDate > post2.creationDate
                 })
                 
-                //print("post caption is  \(post.caption)\n")
+                // stop refreshing
+                
+                self.collectionView.refreshControl?.endRefreshing()
+                
                 self.collectionView.reloadData()
             })
         }
