@@ -137,7 +137,14 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     
     
     func handleShowLikes(for cell: Feedcell) {
-        print("handle show likes")
+        
+        
+        guard let post = cell.post else {return}
+        guard let postId = post.postId else {return}
+        let followLikeVC = FollowLikeVC()
+        followLikeVC.postId = postId // passing the value to followVC 
+        followLikeVC.viewingMode = FollowLikeVC.ViewingMode(index: 2) // set the enum case value for followLikeVC
+        navigationController?.pushViewController(followLikeVC, animated: true)
     }
     
     

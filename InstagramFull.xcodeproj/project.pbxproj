@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		628A3CC81AE76E2CF9403B0D /* Pods_InstagramFull.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A616A39A45573957BC893C /* Pods_InstagramFull.framework */; };
 		BC07AF5F221B34360039ED43 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC07AF5E221B34360039ED43 /* Protocols.swift */; };
-		BC07AF61221B51C00039ED43 /* FollowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC07AF60221B51C00039ED43 /* FollowVC.swift */; };
-		BC07AF63221B526C0039ED43 /* FollowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC07AF62221B526C0039ED43 /* FollowCell.swift */; };
+		BC07AF61221B51C00039ED43 /* FollowLikeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC07AF60221B51C00039ED43 /* FollowLikeVC.swift */; };
+		BC07AF63221B526C0039ED43 /* FollowLikeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC07AF62221B526C0039ED43 /* FollowLikeCell.swift */; };
 		BC0A174122144EB200669F98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC0A174022144EB200669F98 /* GoogleService-Info.plist */; };
 		BC0C87B122129E480059F5F1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0C87B022129E480059F5F1 /* LoginVC.swift */; };
 		BC0C87B42212A5B50059F5F1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0C87B32212A5B50059F5F1 /* Extensions.swift */; };
@@ -42,8 +42,8 @@
 		57D6DC47156BA6F04A7D0D9D /* Pods-InstagramFull.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramFull.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstagramFull/Pods-InstagramFull.debug.xcconfig"; sourceTree = "<group>"; };
 		90A616A39A45573957BC893C /* Pods_InstagramFull.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramFull.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC07AF5E221B34360039ED43 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		BC07AF60221B51C00039ED43 /* FollowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowVC.swift; sourceTree = "<group>"; };
-		BC07AF62221B526C0039ED43 /* FollowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCell.swift; sourceTree = "<group>"; };
+		BC07AF60221B51C00039ED43 /* FollowLikeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowLikeVC.swift; sourceTree = "<group>"; };
+		BC07AF62221B526C0039ED43 /* FollowLikeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowLikeCell.swift; sourceTree = "<group>"; };
 		BC0A174022144EB200669F98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BC0C87B022129E480059F5F1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		BC0C87B32212A5B50059F5F1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 			children = (
 				BCF8CB452216D65700022212 /* UserProfileHeader.swift */,
 				BCEA0603221883B300D7B93E /* SearchUserCell.swift */,
-				BC07AF62221B526C0039ED43 /* FollowCell.swift */,
+				BC07AF62221B526C0039ED43 /* FollowLikeCell.swift */,
 				BC36101A221D84EA00C07713 /* SelectPhotoCell.swift */,
 				BC36101C221D853B00C07713 /* SelectPhotoHeader.swift */,
 				BC1C72A6221F29F8002E18D4 /* UserPostCell.swift */,
@@ -155,7 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				BCD8273C221552150030B81E /* UserProfileVC.swift */,
-				BC07AF60221B51C00039ED43 /* FollowVC.swift */,
+				BC07AF60221B51C00039ED43 /* FollowLikeVC.swift */,
 			);
 			path = "User Profile";
 			sourceTree = "<group>";
@@ -372,7 +372,7 @@
 				BCD82735221551AA0030B81E /* FeedVC.swift in Sources */,
 				BCD8273B221551FB0030B81E /* NotificationVC.swift in Sources */,
 				BCF20A0B22140A49007D1422 /* SignUpVC.swift in Sources */,
-				BC07AF61221B51C00039ED43 /* FollowVC.swift in Sources */,
+				BC07AF61221B51C00039ED43 /* FollowLikeVC.swift in Sources */,
 				BC36101B221D84EA00C07713 /* SelectPhotoCell.swift in Sources */,
 				BCEA0604221883B300D7B93E /* SearchUserCell.swift in Sources */,
 				BC1C72A7221F29F8002E18D4 /* UserPostCell.swift in Sources */,
@@ -382,7 +382,7 @@
 				BC1C72A5221EE1C2002E18D4 /* Post.swift in Sources */,
 				BC361017221D837500C07713 /* UploadPostVC.swift in Sources */,
 				BC0C87B42212A5B50059F5F1 /* Extensions.swift in Sources */,
-				BC07AF63221B526C0039ED43 /* FollowCell.swift in Sources */,
+				BC07AF63221B526C0039ED43 /* FollowLikeCell.swift in Sources */,
 				BCD8273322154F1B0030B81E /* MainTabVC.swift in Sources */,
 				BCF3B02222172C4C00736307 /* User.swift in Sources */,
 				BCF74AB522118AC7001236A9 /* AppDelegate.swift in Sources */,
