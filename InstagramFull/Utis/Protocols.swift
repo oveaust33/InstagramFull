@@ -25,10 +25,11 @@ protocol FeedCellDelegate {
     
     func handleUserNameTappe(for cell : Feedcell)
     func handleOptionsTapped(for cell : Feedcell)
-    func handleLikeTapped(for cell : Feedcell)
+    func handleLikeTapped(for cell : Feedcell , isDoubleTapped : Bool)
     func handleCommentTapped(for cell : Feedcell)
     func handleConfigureLikeButton(for cell : Feedcell)
     func handleShowLikes(for cell : Feedcell)
+    
     
 }
 

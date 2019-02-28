@@ -25,9 +25,9 @@ class FollowLikeVC : UITableViewController , FollowCellDelegate {
         init(index: Int){
             
             switch index {
-            case 0:self = .Following
-            case 1:self = .Followers
-            case 2:self = .Likes
+            case 0: self = .Following
+            case 1: self = .Followers
+            case 2: self = .Likes
             default:self = .Following
                 
             }
@@ -45,15 +45,11 @@ class FollowLikeVC : UITableViewController , FollowCellDelegate {
         super.viewDidLoad()
         tableView.register(FollowLikeCell.self, forCellReuseIdentifier: reuseIdentifier)
         
-        //config nav controller and fetch user
-        if let viewingMode = self.viewingMode {
-            
-            //configure nav title
-            configureNavigationTitle(with: viewingMode)
-            
-            //fetch User
-            self.fetchUsers(by: self.viewingMode)
-        }
+        //Config Nav title
+        configureNavigationTitle()
+        
+        //fetch user
+        fetchUsers()
         
         
         
@@ -123,8 +119,11 @@ class FollowLikeVC : UITableViewController , FollowCellDelegate {
     
     //  MARK: - Handlers
     
-    func configureNavigationTitle(with viewingMode: ViewingMode){
+    func configureNavigationTitle(){
         //configure Nav Controller
+        
+        guard let viewingMode = self.viewingMode else {return}
+        
         switch viewingMode {
         case .Followers: navigationItem.title = "Followers"
         case .Following: navigationItem.title = "Following"
@@ -145,8 +144,17 @@ class FollowLikeVC : UITableViewController , FollowCellDelegate {
         }
     }
     
-    func fetchUsers(by viewingMode : ViewingMode) {
+    func fetchUser(with uid : String){
         
+        Database.fetchUser(with: uid, completion: { (user) in
+            self.users.append(user)
+            self.tableView.reloadData()
+        })
+    }
+    
+    func fetchUsers() {
+        
+        guard let viewingMode = self.viewingMode else {return}
         guard let ref = getDatabaseRefference() else {return}
         
         switch viewingMode {
@@ -157,15 +165,10 @@ class FollowLikeVC : UITableViewController , FollowCellDelegate {
             ref.child(uid).observeSingleEvent(of : .value) { (snapshot) in
                 guard let allobjects = snapshot.children.allObjects as? [DataSnapshot] else {return}
                 allobjects.forEach({ (snapshot) in
-                    let userId = snapshot.key
-                    Database.fetchUser(with: userId, completion: { (user) in
-                        self.users.append(user)
-                        
-                        self.tableView.reloadData()
+                    let uid = snapshot.key
+                    self.fetchUser(with: uid)
                     })
-                })
             }
-            
             
         case .Likes :
             
@@ -173,12 +176,7 @@ class FollowLikeVC : UITableViewController , FollowCellDelegate {
             ref.child(postId).observe(.childAdded) { (snapshot) in
                 
                 let uid = snapshot.key
-                Database.fetchUser(with: uid, completion: { (user) in
-                    self.users.append(user)
-                    self.tableView.reloadData()
-                })
-      
-                
+                self.fetchUser(with: uid)
             }
         }
     }

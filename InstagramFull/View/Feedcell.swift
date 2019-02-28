@@ -72,12 +72,18 @@ class Feedcell: UICollectionViewCell {
  
     }()
     
-    let postImageView : CustomImageView = {
+    lazy var postImageView : CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.backgroundColor = .lightGray
         
+        //add gesture recognizer to douvle tap like
+        let liketap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTapToLike))
+        liketap.numberOfTapsRequired = 2
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(liketap)
+   
         return iv
     }()
     
@@ -193,6 +199,13 @@ class Feedcell: UICollectionViewCell {
     
     //  MARK: - Handlers
     
+    @objc func handleDoubleTapToLike(){
+        
+        delegate?.handleLikeTapped(for: self, isDoubleTapped: true)
+        
+        
+    }
+    
     @objc func handleUserNameTapped(){
         
         delegate?.handleUserNameTappe(for: self)
@@ -207,7 +220,7 @@ class Feedcell: UICollectionViewCell {
     
     @objc func handleLikeTapped(){
         
-        delegate?.handleLikeTapped(for: self)
+        delegate?.handleLikeTapped(for: self , isDoubleTapped : false)
         
     }
     

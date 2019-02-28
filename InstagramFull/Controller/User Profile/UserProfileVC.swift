@@ -170,6 +170,7 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         
         var numberOfFollowers : Int!
         var numberOfFollowing : Int!
+        var numberofPosts : Int!
         
         //  Get number of FOLLOWERS
         USER_FOLLOWER_REF.child(uid).observe(.value) { (snapshot) in
@@ -201,7 +202,26 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
             header.follwingLabel.attributedText = attributedText
             
         }
+        
+        //number of posts
+        USER_POSTS_REF.child(uid).observe(.value) { (snapshot) in
+            
+            if let snapshot = snapshot.value as? Dictionary<String , AnyObject> {
+                numberofPosts = snapshot.count
+            }
+            else {
+                numberofPosts = 0
+            }
+            
+            let attributedText = NSMutableAttributedString(string: "\(numberofPosts ?? 5)\n", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
+            attributedText.append(NSAttributedString(string: "posts", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor : UIColor.lightGray.cgColor]))
+            header.postLabel.attributedText = attributedText
+            
+        }
     }
+    
+    
+    
     
     
     //  MARK: - API

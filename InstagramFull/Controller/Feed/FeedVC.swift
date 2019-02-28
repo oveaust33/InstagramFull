@@ -111,23 +111,25 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
 
     }
     
-    func handleLikeTapped(for cell: Feedcell) {
+    func handleLikeTapped(for cell: Feedcell , isDoubleTapped : Bool) {
+        
+       
         
         guard let post = cell.post else {return}
         
         if post.didLike{
-            post.adjustLikes(addLike: false) { (likes) in
-                
-                cell.likesLabel.text = "\(likes) likes"
-                cell.likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
-                cell.likeButton.tintColor = .black
-               
-                
+            //handle unlike a post
+            if !isDoubleTapped {
+                post.adjustLikes(addLike: false) { (likes) in
+                    cell.likesLabel.text = "\(likes) likes"
+                    cell.likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
+                    cell.likeButton.tintColor = .black
+                }
             }
             
         } else {
+            //handle liking post
             post.adjustLikes(addLike: true) { (likes) in
-                
                 cell.likesLabel.text = "\(likes) likes"
                 cell.likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
                 cell.likeButton.tintColor = .red
