@@ -11,6 +11,14 @@ import Firebase
 
 class LoginVC: UIViewController {
     
+    var activityIndicator : UIActivityIndicatorView = {
+
+        let Activity = UIActivityIndicatorView()
+        Activity.color = .green
+        return Activity
+    }()
+    
+    
     let logoContainerView : UIView = {
         let view = UIView()
         
@@ -86,6 +94,11 @@ class LoginVC: UIViewController {
         view.addSubview(dontHaveAccountButton)
         
         dontHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+        
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.isHidden = true
+        activityIndicator.center = view.center
 
         //Navigation Bar Hide
 
@@ -113,6 +126,8 @@ class LoginVC: UIViewController {
     }
     
     @objc func handleLogIn(){
+        activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
         
         //properties
         
@@ -136,8 +151,10 @@ class LoginVC: UIViewController {
             //configure view controller in main tab
             mainTabVC.configureViewController()
             
+            
             ///dismiss LoginVC
             self.dismiss(animated: true, completion: nil)
+            self.activityIndicator.stopAnimating()
             
         }
         

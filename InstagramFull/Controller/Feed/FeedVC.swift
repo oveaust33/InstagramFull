@@ -12,8 +12,8 @@ import Firebase
 private let reuseIdentifier = "Cell"
 
 class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , FeedCellDelegate {
-
     
+
     //MARK: - Properties
     
     var posts = [Post]()
@@ -42,7 +42,6 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
         }
         
         updateUserFeeds()
-        
 
     }
 
@@ -180,7 +179,9 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
 
     
     func handleCommentTapped(for cell: Feedcell) {
-        print("User comment Tapped")
+        
+        let commentVC = CommentVC(collectionViewLayout : UICollectionViewFlowLayout())
+        navigationController?.pushViewController(commentVC, animated: true)
 
     }
     
@@ -199,21 +200,6 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
         print("Handle Messages...")
     }
     
-//    func updateLikeStructures(with postId: String , addLike : Bool){
-//
-//        guard let currentUid = Auth.auth().currentUser?.uid else {return}
-//
-//        if addLike{
-//
-//
-//
-//        } else {
-//
-//
-//        }
-//
-//
-//    }
     
     func configureNavigationBar(){
         
@@ -262,7 +248,7 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     // MARK: - API
     
     func updateUserFeeds(){
-        
+
         //update with following people's post
         
         guard let currentUid = Auth.auth().currentUser?.uid else {return}
@@ -289,7 +275,6 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     }
     
     func fetchPosts(){
-        
         guard let currenUid = Auth.auth().currentUser?.uid else {return}
         
         USER_FEED_REF.child(currenUid).observe(.childAdded) { (snapshot) in
@@ -304,9 +289,7 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
                 })
                 
                 // stop refreshing
-                
                 self.collectionView.refreshControl?.endRefreshing()
-                
                 self.collectionView.reloadData()
             })
         }

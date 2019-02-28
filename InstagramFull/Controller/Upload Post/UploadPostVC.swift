@@ -26,6 +26,13 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
         return iv
     }()
     
+    var activityIndicator : UIActivityIndicatorView = {
+        
+        let Activity = UIActivityIndicatorView()
+        Activity.color = .green
+        return Activity
+    }()
+    
     let captionTextView : UITextView = {
         let tv = UITextView()
         tv.backgroundColor = UIColor.groupTableViewBackground
@@ -62,6 +69,11 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
         
         //load image
         loadImage()
+        
+        //activity indicator
+        view.addSubview(activityIndicator)
+        activityIndicator.isHidden = true
+        activityIndicator.center = view.center
 
     }
     
@@ -103,6 +115,9 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
     }
     
     @objc func handleSharePost(){
+        
+        activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
         
         //parameters
         
@@ -163,6 +178,7 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
 
                     //return to homeFeed
                     self.dismiss(animated: true, completion: {
+                        self.activityIndicator.stopAnimating()
                         self.tabBarController?.selectedIndex = 0
                     })
                 })

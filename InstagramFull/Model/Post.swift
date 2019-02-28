@@ -53,7 +53,7 @@ class Post {
         }
     }
     
-    func adjustLikes(addLike: Bool , completion : @escaping(Int) ->()){
+    func adjustLikes(addLike: Bool , completion : @escaping(Int) ->()) {
         
         guard let currentUid = Auth.auth().currentUser?.uid else {return}
         guard let postId = self.postId else {return}
@@ -61,28 +61,27 @@ class Post {
         
         if addLike {
             
-            
             // update user likes structure
-            USER_LIKES_REF.child(currentUid).updateChildValues([postId : 1]) { (error, ref) in
+            USER_LIKES_REF.child(currentUid).updateChildValues([postId : 1] , withCompletionBlock : { (err , ref) in
                 
                 //update post likes structure
-                POST_LIKES_REF.child(self.postId).updateChildValues([currentUid : 1]) { (err, ref) in
+                POST_LIKES_REF.child(self.postId).updateChildValues([currentUid : 1] , withCompletionBlock : {(err, ref) in
                     
                     self.likes = self.likes + 1
                     self.didLike = true
                     completion(self.likes)
                     POSTS_REF.child(self.postId).child("likes").setValue(self.likes)
-                }
-            }
+                })
+            })
 
             
         } else {
 
             //remove like from user like structure
-            USER_LIKES_REF.child(currentUid).child(postId).removeValue { (err, ref) in
+            USER_LIKES_REF.child(currentUid).child(postId).removeValue ( completionBlock : { (err, ref) in
                 
                 //remove likes from post-like structure
-                POST_LIKES_REF.child(self.postId).child(currentUid).removeValue { (err, ref) in
+                POST_LIKES_REF.child(self.postId).child(currentUid).removeValue ( completionBlock : { (err, ref) in
                     
                     guard self.likes > 0 else {return}
                     
@@ -92,15 +91,9 @@ class Post {
 
                     POSTS_REF.child(self.postId).child("likes").setValue(self.likes)
 
-
-                    
-                }
-                
-            }
-            
+                })
+            })
         }
-        
-        
-        
+
     }
 }

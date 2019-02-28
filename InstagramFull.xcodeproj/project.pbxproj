@@ -20,6 +20,8 @@
 		BC361019221D843B00C07713 /* SelectImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC361018221D843B00C07713 /* SelectImageVC.swift */; };
 		BC36101B221D84EA00C07713 /* SelectPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC36101A221D84EA00C07713 /* SelectPhotoCell.swift */; };
 		BC36101D221D853B00C07713 /* SelectPhotoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC36101C221D853B00C07713 /* SelectPhotoHeader.swift */; };
+		BC8C0184222860D20057B85E /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C0183222860D20057B85E /* CommentVC.swift */; };
+		BC8C01862228619C0057B85E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C01852228619C0057B85E /* CommentCell.swift */; };
 		BCB5D7772219C431006E66F5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB5D7762219C431006E66F5 /* Constants.swift */; };
 		BCD8273322154F1B0030B81E /* MainTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8273222154F1B0030B81E /* MainTabVC.swift */; };
 		BCD82735221551AA0030B81E /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD82734221551AA0030B81E /* FeedVC.swift */; };
@@ -53,6 +55,8 @@
 		BC361018221D843B00C07713 /* SelectImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageVC.swift; sourceTree = "<group>"; };
 		BC36101A221D84EA00C07713 /* SelectPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoCell.swift; sourceTree = "<group>"; };
 		BC36101C221D853B00C07713 /* SelectPhotoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoHeader.swift; sourceTree = "<group>"; };
+		BC8C0183222860D20057B85E /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
+		BC8C01852228619C0057B85E /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		BCB5D7762219C431006E66F5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BCD8273222154F1B0030B81E /* MainTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabVC.swift; sourceTree = "<group>"; };
 		BCD82734221551AA0030B81E /* FeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
@@ -127,6 +131,7 @@
 				BC36101C221D853B00C07713 /* SelectPhotoHeader.swift */,
 				BC1C72A6221F29F8002E18D4 /* UserPostCell.swift */,
 				BCFD73CA2221A99600455576 /* Feedcell.swift */,
+				BC8C01852228619C0057B85E /* CommentCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -189,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				BCD82734221551AA0030B81E /* FeedVC.swift */,
+				BC8C0183222860D20057B85E /* CommentVC.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -370,12 +376,14 @@
 				BC07AF5F221B34360039ED43 /* Protocols.swift in Sources */,
 				BCF8CB462216D65700022212 /* UserProfileHeader.swift in Sources */,
 				BCD82735221551AA0030B81E /* FeedVC.swift in Sources */,
+				BC8C0184222860D20057B85E /* CommentVC.swift in Sources */,
 				BCD8273B221551FB0030B81E /* NotificationVC.swift in Sources */,
 				BCF20A0B22140A49007D1422 /* SignUpVC.swift in Sources */,
 				BC07AF61221B51C00039ED43 /* FollowLikeVC.swift in Sources */,
 				BC36101B221D84EA00C07713 /* SelectPhotoCell.swift in Sources */,
 				BCEA0604221883B300D7B93E /* SearchUserCell.swift in Sources */,
 				BC1C72A7221F29F8002E18D4 /* UserPostCell.swift in Sources */,
+				BC8C01862228619C0057B85E /* CommentCell.swift in Sources */,
 				BCD8273D221552150030B81E /* UserProfileVC.swift in Sources */,
 				BCFD73CB2221A99600455576 /* Feedcell.swift in Sources */,
 				BC0C87B122129E480059F5F1 /* LoginVC.swift in Sources */,
