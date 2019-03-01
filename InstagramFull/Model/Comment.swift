@@ -22,19 +22,17 @@ class Comment {
         
         if let uid = dictionary["uid"] as? String {
             
-            self.uid = uid
-    
+                self.uid = uid
         }
-           
-                    
+        
         if let commentText = dictionary["commentText"] as? String {
                     
-            self.commentText = commentText
+                self.commentText = commentText
         }
         
         if let creationDate = dictionary["creationDate"] as? Double {
                         
-            self.creationDate = Date(timeIntervalSince1970: creationDate)
+                self.creationDate = Date(timeIntervalSince1970: creationDate)
         }
  
     }
