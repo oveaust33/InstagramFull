@@ -23,6 +23,7 @@
 		BC8C0184222860D20057B85E /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C0183222860D20057B85E /* CommentVC.swift */; };
 		BC8C01862228619C0057B85E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C01852228619C0057B85E /* CommentCell.swift */; };
 		BCB5D7772219C431006E66F5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB5D7762219C431006E66F5 /* Constants.swift */; };
+		BCCCBFE62229538800EED37E /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCBFE52229538800EED37E /* Comment.swift */; };
 		BCD8273322154F1B0030B81E /* MainTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8273222154F1B0030B81E /* MainTabVC.swift */; };
 		BCD82735221551AA0030B81E /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD82734221551AA0030B81E /* FeedVC.swift */; };
 		BCD82737221551CA0030B81E /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD82736221551CA0030B81E /* SearchVC.swift */; };
@@ -58,6 +59,7 @@
 		BC8C0183222860D20057B85E /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
 		BC8C01852228619C0057B85E /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		BCB5D7762219C431006E66F5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		BCCCBFE52229538800EED37E /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		BCD8273222154F1B0030B81E /* MainTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabVC.swift; sourceTree = "<group>"; };
 		BCD82734221551AA0030B81E /* FeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		BCD82736221551CA0030B81E /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			children = (
 				BCF3B02122172C4C00736307 /* User.swift */,
 				BC1C72A4221EE1C2002E18D4 /* Post.swift */,
+				BCCCBFE52229538800EED37E /* Comment.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				BCF3B02222172C4C00736307 /* User.swift in Sources */,
 				BCF74AB522118AC7001236A9 /* AppDelegate.swift in Sources */,
 				BCB5D7772219C431006E66F5 /* Constants.swift in Sources */,
+				BCCCBFE62229538800EED37E /* Comment.swift in Sources */,
 				BCD82737221551CA0030B81E /* SearchVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

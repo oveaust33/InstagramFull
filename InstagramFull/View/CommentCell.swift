@@ -10,6 +10,31 @@ import UIKit
 
 class CommentCell: UICollectionViewCell {
     
+    var comment : Comment? {
+        
+        didSet {
+            guard let user = comment?.user else {return}
+            guard let profileImageUrl = comment?.user?.profileImageURL else {return}
+            guard let userName = user.userName else {return}
+            guard let commentText = comment?.commentText else {return}
+            
+            profileImageView.loadImage(with: profileImageUrl)
+            
+            let attributedText = NSMutableAttributedString(string: userName , attributes: [NSMutableAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
+            attributedText.append(NSMutableAttributedString(string: " \(commentText)", attributes: [NSMutableAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]))
+            
+            attributedText.append(NSMutableAttributedString(string: " 2d.", attributes: [NSMutableAttributedString.Key.font : UIFont.systemFont(ofSize: 14) , NSAttributedString.Key.foregroundColor : UIColor.lightGray]))
+            
+            commentLabel.attributedText = attributedText
+
+            
+    
+            
+        }
+    }
+    
+  
+    
     let profileImageView : CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
@@ -22,15 +47,14 @@ class CommentCell: UICollectionViewCell {
     
     let commentLabel : UILabel = {
         let label = UILabel()
-        let attributedText = NSMutableAttributedString(string: "Joker", attributes: [NSMutableAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
-        attributedText.append(NSMutableAttributedString(string: " some test comment", attributes: [NSMutableAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]))
-        
-        attributedText.append(NSMutableAttributedString(string: " 2d.", attributes: [NSMutableAttributedString.Key.font : UIFont.systemFont(ofSize: 14) , NSAttributedString.Key.foregroundColor : UIColor.lightGray]))
-        
-        
-        label.attributedText = attributedText
-        
         return label
+    }()
+    
+    let separatorView : UIView = {
+        
+        let view = UIView()
+        view.backgroundColor = UIColor.lightGray
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -47,6 +71,9 @@ class CommentCell: UICollectionViewCell {
         addSubview(commentLabel)
         commentLabel.anchor(top: nil, left: profileImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
         commentLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        
+        addSubview(separatorView)
+        separatorView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 60, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         
         
     }
