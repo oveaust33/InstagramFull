@@ -30,7 +30,10 @@ protocol FeedCellDelegate {
     func handleConfigureLikeButton(for cell : Feedcell)
     func handleShowLikes(for cell : Feedcell)
     
-    
+}
+
+protocol Printable {
+    var description : String { get }
 }
 
 

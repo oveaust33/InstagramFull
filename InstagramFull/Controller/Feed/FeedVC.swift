@@ -123,6 +123,7 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
                     cell.likesLabel.text = "\(likes) likes"
                     cell.likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
                     cell.likeButton.tintColor = .black
+                    
                 }
             }
             
@@ -132,6 +133,7 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
                 cell.likesLabel.text = "\(likes) likes"
                 cell.likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
                 cell.likeButton.tintColor = .red
+                
             }
         }
     }
@@ -180,9 +182,9 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     
     func handleCommentTapped(for cell: Feedcell) {
         
-        guard let postId = cell.post?.postId else {return}
+        guard let post = cell.post else {return}
         let commentVC = CommentVC(collectionViewLayout : UICollectionViewFlowLayout())
-        commentVC.postId = postId
+        commentVC.post = post
         navigationController?.pushViewController(commentVC, animated: true)
 
     }
@@ -296,4 +298,5 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
             })
         }
     }
+  
 }
