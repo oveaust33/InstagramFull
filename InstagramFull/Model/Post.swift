@@ -89,8 +89,6 @@ class Post {
                 //Remove notification from server
                 NOTIFICATIONS_REF.child(self.ownerUid).child(notificationId).removeValue(completionBlock: { (err, ref) in
                     
-                    
-                    
                     //remove like from user like structure
                     USER_LIKES_REF.child(currentUid).child(self.postId).removeValue ( completionBlock : { (err, ref) in
                         
@@ -98,7 +96,6 @@ class Post {
                         POST_LIKES_REF.child(self.postId).child(currentUid).removeValue ( completionBlock : { (err, ref) in
                             
                             guard self.likes > 0 else {return}
-                            
                             self.likes = self.likes - 1
                             self.didLike = false
                             completion(self.likes)

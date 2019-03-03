@@ -32,6 +32,13 @@ protocol FeedCellDelegate {
     
 }
 
+protocol NotificationCellDelegate {
+    
+    func followTapped (for cell : NotificationCell)
+    func handlePostTapped (for cell : NotificationCell)
+ 
+}
+
 protocol Printable {
     var description : String { get }
 }

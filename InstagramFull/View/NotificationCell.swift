@@ -12,6 +12,32 @@ class NotificationCell: UITableViewCell {
     
     //  MARK: - Properties
     
+    var delegate : NotificationCellDelegate?
+    
+    var notification : Notification? {
+        
+        didSet {
+            
+            guard let user = notification?.user else {return}
+            guard let profileImageUrl = user.profileImageURL else {return}
+            
+            
+            //Configure notification labels
+            self.configureNotificationLabel()
+            
+            //Configre notification Type
+            configureNotificationType()
+            
+            profileImageView.loadImage(with: profileImageUrl)
+            
+            if let post = notification?.post {
+                
+                postImageView.loadImage(with: post.imageUrl)
+            }
+            
+        }
+    }
+    
     let profileImageView : CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
@@ -23,10 +49,8 @@ class NotificationCell: UITableViewCell {
     
     let notificationlabel : UILabel = {
         let label = UILabel()
-        let attributedText = NSMutableAttributedString(string: "Joker", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12)])
-        attributedText.append(NSAttributedString(string: " Commented on your post.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12)]))
-        attributedText.append(NSAttributedString(string: " 2d.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor : UIColor.lightGray.cgColor]))
-        label.attributedText = attributedText
+
+        
         label.numberOfLines = 2
         
         return label
@@ -41,11 +65,15 @@ class NotificationCell: UITableViewCell {
         return button
     }()
     
-    let postImageView : CustomImageView = {
+    lazy var postImageView : CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.backgroundColor = .lightGray
+        let postTap = UITapGestureRecognizer(target: self, action: #selector(handlePostTapped))
+        postTap.numberOfTapsRequired = 1
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(postTap)
         
         return iv
     }()
@@ -54,38 +82,97 @@ class NotificationCell: UITableViewCell {
     
     //  MARK: - Handlers
     
+    @objc func handlePostTapped(){
+        delegate?.handlePostTapped(for: self)
+        
+    }
+    
     @objc func handleFollowTapped(){
         
-        print("Handle Follow Tapped...")
+    delegate?.followTapped(for: self)
+        
+    }
+    
+    func configureNotificationLabel(){
+        
+        guard let notification = self.notification else {return}
+        guard let user = notification.user else {return}
+        guard let userName = user.userName else {return}
+        guard let notificationMessage = notification.notofocationType?.description else {return}
+
+        
+        let attributedText = NSMutableAttributedString(string: "\(userName)", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12)])
+        attributedText.append(NSAttributedString(string: notificationMessage, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12)]))
+        attributedText.append(NSAttributedString(string: " 2d.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor : UIColor.lightGray.cgColor]))
+        
+        notificationlabel.attributedText = attributedText
+        
+    }
+    
+    func configureNotificationType(){
+        
+        guard let notification = self.notification else {return}
+        guard let user = notification.user else {return}
+        
+        var anchor : NSLayoutXAxisAnchor!
+        
+        if notification.notofocationType != .Follow {
+            
+            //Notification type is comment/Like
+            addSubview(postImageView)
+            postImageView.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 40, height: 40)
+            postImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            anchor = postImageView.leftAnchor
+
+            
+        } else {
+            
+            //notification type is Follow
+            addSubview(followButton)
+            followButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 90, height: 30)
+            followButton.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            followButton.layer.cornerRadius = 3
+            anchor = followButton.leftAnchor
+            
+            user.chekIfUserIsFollowed { (followed) in
+                if followed {
+                    
+                    //Config Follow button for followed user
+                    self.followButton.setTitle("Following", for: .normal)
+                    self.followButton.setTitleColor(.black, for: .normal)
+                    self.followButton.layer.borderWidth = 0.5
+                    self.followButton.layer.borderColor = UIColor.lightGray.cgColor
+                    self.followButton.backgroundColor = .white
+                    
+                } else {
+                    
+                    //config follow button for non-followed user
+                    self.followButton.setTitle("Follow", for: .normal)
+                    self.followButton.setTitleColor(.white, for: .normal)
+                    self.followButton.layer.borderWidth = 0
+                    self.followButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
+                    
+                }
+            }
+        }
+        
+        addSubview(notificationlabel)
+        notificationlabel.anchor(top: nil, left: profileImageView.rightAnchor, bottom: nil, right: anchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
+        notificationlabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        
     }
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style : style , reuseIdentifier : reuseIdentifier)
         
+        self.selectionStyle = .none
+        
         addSubview(profileImageView)
         profileImageView.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImageView.layer.cornerRadius = 40/2
-        
-        addSubview(followButton)
-        followButton.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 90, height: 30)
-        followButton.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        followButton.layer.cornerRadius = 3
-        followButton.isHidden = true
-        
-        addSubview(postImageView)
-        postImageView.anchor(top: nil, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 40, height: 40)
-        postImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-
-        
-        addSubview(notificationlabel)
-        notificationlabel.anchor(top: nil, left: profileImageView.rightAnchor, bottom: nil, right: postImageView.leftAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
-        notificationlabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        
-        
-
-        
+      
     }
     
     required init?(coder aDecoder: NSCoder) {

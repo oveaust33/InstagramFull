@@ -79,14 +79,10 @@ class Notification {
                 
                 self.didCheck = false
             }
+                
             else{
                 self.didCheck = true
             }
         }
-        
-        
     }
-    
-    
-    
 }
