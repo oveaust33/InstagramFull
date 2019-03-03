@@ -111,9 +111,7 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     }
     
     func handleLikeTapped(for cell: Feedcell , isDoubleTapped : Bool) {
-        
-       
-        
+ 
         guard let post = cell.post else {return}
         
         if post.didLike{

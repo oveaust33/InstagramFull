@@ -17,13 +17,14 @@ class CommentCell: UICollectionViewCell {
             guard let profileImageUrl = comment?.user?.profileImageURL else {return}
             guard let userName = user.userName else {return}
             guard let commentText = comment?.commentText else {return}
+            guard let commentTime = self.getCommentTimeStamp() else {return}
             
             profileImageView.loadImage(with: profileImageUrl)
             
             let attributedText = NSMutableAttributedString(string: userName , attributes: [NSMutableAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)])
             attributedText.append(NSMutableAttributedString(string: " \(commentText)", attributes: [NSMutableAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]))
             
-            attributedText.append(NSMutableAttributedString(string: " 2d.", attributes: [NSMutableAttributedString.Key.font : UIFont.systemFont(ofSize: 14) , NSAttributedString.Key.foregroundColor : UIColor.lightGray]))
+            attributedText.append(NSMutableAttributedString(string: " \(commentTime)", attributes: [NSMutableAttributedString.Key.font : UIFont.systemFont(ofSize: 14) , NSAttributedString.Key.foregroundColor : UIColor.lightGray]))
             
             commentTextView.attributedText = attributedText
  
@@ -49,6 +50,19 @@ class CommentCell: UICollectionViewCell {
         
         return tv
     }()
+    
+    func getCommentTimeStamp() -> String?{
+        
+        guard let comment = self.comment else { return nil }
+        
+        let dateFormatter = DateComponentsFormatter()
+        dateFormatter.allowedUnits = [.second , .minute , .hour , .day , .weekOfMonth]
+        dateFormatter.maximumUnitCount = 1
+        dateFormatter.unitsStyle = .abbreviated
+        let now = Date()
+        return dateFormatter.string(from: comment.creationDate, to: now)
+        
+    }
 
     override init(frame: CGRect) {
         super.init(frame : frame)

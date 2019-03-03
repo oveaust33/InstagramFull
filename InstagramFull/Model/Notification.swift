@@ -20,9 +20,9 @@ class Notification {
             
             switch self {
                 
-            case .Like : return " Liked your post."
-            case .Comment : return " commented on your post."
-            case .Follow : return " started following you."
+            case .Like : return " Liked your post"
+            case .Comment : return " commented on your post"
+            case .Follow : return " started following you"
                 
             }
         }

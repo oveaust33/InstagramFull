@@ -99,7 +99,6 @@ class Post {
                             self.likes = self.likes - 1
                             self.didLike = false
                             completion(self.likes)
-                            
                             POSTS_REF.child(self.postId).child("likes").setValue(self.likes)
                             
                         })

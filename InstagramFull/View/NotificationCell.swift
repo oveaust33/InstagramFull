@@ -25,6 +25,7 @@ class NotificationCell: UITableViewCell {
             //Configure notification labels
             self.configureNotificationLabel()
             
+            
             //Configre notification Type
             configureNotificationType()
             
@@ -99,11 +100,12 @@ class NotificationCell: UITableViewCell {
         guard let user = notification.user else {return}
         guard let userName = user.userName else {return}
         guard let notificationMessage = notification.notofocationType?.description else {return}
+        guard let notificationDate = self.getNotifocationTimeStamp() else {return}
 
         
         let attributedText = NSMutableAttributedString(string: "\(userName)", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12)])
         attributedText.append(NSAttributedString(string: notificationMessage, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12)]))
-        attributedText.append(NSAttributedString(string: " 2d.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor : UIColor.lightGray.cgColor]))
+        attributedText.append(NSAttributedString(string: " \(notificationDate)", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor : UIColor.lightGray.cgColor]))
         
         notificationlabel.attributedText = attributedText
         
@@ -162,6 +164,21 @@ class NotificationCell: UITableViewCell {
         
     }
     
+    func getNotifocationTimeStamp() -> String?{
+        
+        guard let notification = self.notification else { return nil }
+        
+        let dateFormatter = DateComponentsFormatter()
+        dateFormatter.allowedUnits = [.second , .minute , .hour , .day , .weekOfMonth]
+        dateFormatter.maximumUnitCount = 1
+        dateFormatter.unitsStyle = .abbreviated
+        let now = Date()
+        return dateFormatter.string(from: notification.creationDate, to: now)
+        
+    }
+    
+    
+    //  MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style : style , reuseIdentifier : reuseIdentifier)
