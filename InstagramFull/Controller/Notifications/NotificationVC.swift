@@ -89,7 +89,6 @@ class NotificationVC: UITableViewController, NotificationCellDelegate {
         let feedController = FeedVC(collectionViewLayout : UICollectionViewFlowLayout())
         feedController.viewSinglePost = true
         feedController.post = post
-        
         navigationController?.pushViewController(feedController, animated: true)
 
     }
@@ -120,6 +119,7 @@ class NotificationVC: UITableViewController, NotificationCellDelegate {
             
             guard let dictionary = snapshot.value as? Dictionary<String,AnyObject> else {return}
             guard let uid = dictionary["uid"] as? String else {return}
+            let notificationId = snapshot.key  
             
             Database.fetchUser(with: uid, completion: { (user) in
                 
@@ -140,6 +140,9 @@ class NotificationVC: UITableViewController, NotificationCellDelegate {
                     self.handleReloadTable()
                 }
             })
+            
+            NOTIFICATIONS_REF.child(currentUid).child(notificationId).child("checked").setValue(1)
+
         }
     }
 }
