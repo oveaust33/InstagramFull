@@ -22,6 +22,7 @@
 		BC36101D221D853B00C07713 /* SelectPhotoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC36101C221D853B00C07713 /* SelectPhotoHeader.swift */; };
 		BC8C0184222860D20057B85E /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C0183222860D20057B85E /* CommentVC.swift */; };
 		BC8C01862228619C0057B85E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C01852228619C0057B85E /* CommentCell.swift */; };
+		BC9719472243F5070077D697 /* SearchPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9719462243F5070077D697 /* SearchPostCell.swift */; };
 		BCADED5E222AC28400B6D62A /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCADED5D222AC28400B6D62A /* Notification.swift */; };
 		BCB5D7772219C431006E66F5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB5D7762219C431006E66F5 /* Constants.swift */; };
 		BCC2A0AF2229B92400E5F72C /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2A0AE2229B92400E5F72C /* NotificationCell.swift */; };
@@ -60,6 +61,7 @@
 		BC36101C221D853B00C07713 /* SelectPhotoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoHeader.swift; sourceTree = "<group>"; };
 		BC8C0183222860D20057B85E /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
 		BC8C01852228619C0057B85E /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		BC9719462243F5070077D697 /* SearchPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostCell.swift; sourceTree = "<group>"; };
 		BCADED5D222AC28400B6D62A /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		BCB5D7762219C431006E66F5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BCC2A0AE2229B92400E5F72C /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				BCFD73CA2221A99600455576 /* Feedcell.swift */,
 				BC8C01852228619C0057B85E /* CommentCell.swift */,
 				BCC2A0AE2229B92400E5F72C /* NotificationCell.swift */,
+				BC9719462243F5070077D697 /* SearchPostCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				BC8C0184222860D20057B85E /* CommentVC.swift in Sources */,
 				BCD8273B221551FB0030B81E /* NotificationVC.swift in Sources */,
 				BCF20A0B22140A49007D1422 /* SignUpVC.swift in Sources */,
+				BC9719472243F5070077D697 /* SearchPostCell.swift in Sources */,
 				BC07AF61221B51C00039ED43 /* FollowLikeVC.swift in Sources */,
 				BC36101B221D84EA00C07713 /* SelectPhotoCell.swift in Sources */,
 				BCEA0604221883B300D7B93E /* SearchUserCell.swift in Sources */,
