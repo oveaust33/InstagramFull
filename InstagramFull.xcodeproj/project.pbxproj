@@ -24,6 +24,8 @@
 		BC8C01862228619C0057B85E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8C01852228619C0057B85E /* CommentCell.swift */; };
 		BC9719472243F5070077D697 /* SearchPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9719462243F5070077D697 /* SearchPostCell.swift */; };
 		BCADED5E222AC28400B6D62A /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCADED5D222AC28400B6D62A /* Notification.swift */; };
+		BCB5B8712244EB8C001FD10A /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB5B8702244EB8C001FD10A /* MessagesController.swift */; };
+		BCB5B8742244EF32001FD10A /* MessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB5B8732244EF32001FD10A /* MessagesCell.swift */; };
 		BCB5D7772219C431006E66F5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB5D7762219C431006E66F5 /* Constants.swift */; };
 		BCC2A0AF2229B92400E5F72C /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2A0AE2229B92400E5F72C /* NotificationCell.swift */; };
 		BCCCBFE62229538800EED37E /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCBFE52229538800EED37E /* Comment.swift */; };
@@ -63,6 +65,8 @@
 		BC8C01852228619C0057B85E /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		BC9719462243F5070077D697 /* SearchPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostCell.swift; sourceTree = "<group>"; };
 		BCADED5D222AC28400B6D62A /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		BCB5B8702244EB8C001FD10A /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
+		BCB5B8732244EF32001FD10A /* MessagesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCell.swift; sourceTree = "<group>"; };
 		BCB5D7762219C431006E66F5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BCC2A0AE2229B92400E5F72C /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		BCCCBFE52229538800EED37E /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -118,6 +122,7 @@
 		BC0C87AD22129CC50059F5F1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				BCB5B86F2244EB56001FD10A /* Messages */,
 				BCDE39EF2215B56600A5D264 /* Login */,
 				BCDE39EE2215B55D00A5D264 /* Feed */,
 				BCDE39ED2215B55800A5D264 /* Search */,
@@ -132,6 +137,7 @@
 		BC0C87AE22129CD30059F5F1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BCB5B8722244EE9F001FD10A /* Messages */,
 				BCF8CB452216D65700022212 /* UserProfileHeader.swift */,
 				BCEA0603221883B300D7B93E /* SearchUserCell.swift */,
 				BC07AF62221B526C0039ED43 /* FollowLikeCell.swift */,
@@ -166,6 +172,22 @@
 				BCF67F81221FFBE800CC4268 /* CustomImageView.swift */,
 			);
 			path = Utis;
+			sourceTree = "<group>";
+		};
+		BCB5B86F2244EB56001FD10A /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				BCB5B8702244EB8C001FD10A /* MessagesController.swift */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		BCB5B8722244EE9F001FD10A /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				BCB5B8732244EF32001FD10A /* MessagesCell.swift */,
+			);
+			path = Messages;
 			sourceTree = "<group>";
 		};
 		BCDE39EA2215B53A00A5D264 /* User Profile */ = {
@@ -387,7 +409,9 @@
 				BCF67F82221FFBE800CC4268 /* CustomImageView.swift in Sources */,
 				BC07AF5F221B34360039ED43 /* Protocols.swift in Sources */,
 				BCF8CB462216D65700022212 /* UserProfileHeader.swift in Sources */,
+				BCB5B8742244EF32001FD10A /* MessagesCell.swift in Sources */,
 				BCD82735221551AA0030B81E /* FeedVC.swift in Sources */,
+				BCB5B8712244EB8C001FD10A /* MessagesController.swift in Sources */,
 				BC8C0184222860D20057B85E /* CommentVC.swift in Sources */,
 				BCD8273B221551FB0030B81E /* NotificationVC.swift in Sources */,
 				BCF20A0B22140A49007D1422 /* SignUpVC.swift in Sources */,
