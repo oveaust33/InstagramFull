@@ -14,6 +14,8 @@ class MessagesController : UITableViewController {
     
     //  MARK: - Properties
     
+    var messages = [Message]()
+    
     
     
     //  MARK: - Init
@@ -36,7 +38,7 @@ class MessagesController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return messages.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,8 +54,17 @@ class MessagesController : UITableViewController {
     
     @objc func handleNewMessage(){
         let newMessageController = NewMessageController()
+        newMessageController.messagesController = self
         let navigationController = UINavigationController(rootViewController: newMessageController)
         self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    func showChatController(forUser User: User){
+        
+        let chatController = ChatController(collectionViewLayout : UICollectionViewFlowLayout())
+        chatController.user = User
+        navigationController?.pushViewController(chatController, animated: true)
+        
     }
     
     func configureNavigationBar() {
@@ -62,11 +73,5 @@ class MessagesController : UITableViewController {
         
     }
     
-    
-    
-    
-    
-    
-    
-    
+ 
 }
