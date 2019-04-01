@@ -134,6 +134,9 @@ class CommentVC : UICollectionViewController , UICollectionViewDelegateFlowLayou
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CommentCell
+        
+        handleMentionTapped(forCell: cell)
+        handleHashtagTapped(forCell: cell)
         cell.comment = comments[indexPath.item]
         return cell
     }
@@ -159,6 +162,50 @@ class CommentVC : UICollectionViewController , UICollectionViewDelegateFlowLayou
             
         }
 
+    }
+    
+    func handleHashtagTapped(forCell cell: CommentCell){
+        
+        cell.commentLabel.handleHashtagTap { (hashtag) in
+            let hashtagController = HashtagController(collectionViewLayout: UICollectionViewFlowLayout())
+            hashtagController.hashtag = hashtag
+            self.navigationController?.pushViewController(hashtagController, animated: true)
+        }
+        
+    
+    }
+    
+    func handleMentionTapped(forCell cell : CommentCell){
+        
+        cell.commentLabel.handleMentionTap { (userName) in
+            
+            self.getMentionedUser(WithUserName: userName)
+        }
+    }
+    
+    //  MARK: - API
+    
+    func getMentionedUser(WithUserName userName : String){
+        
+        USER_REF.observe(.childAdded) { (snapshot) in
+            
+            let uid = snapshot.key
+            
+            USER_REF.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                guard let dictionary = snapshot.value as? Dictionary<String,AnyObject> else {return}
+                
+                if userName == dictionary["userName"] as? String {
+                    
+                    Database.fetchUser(with: uid, completion: { (user) in
+                        let userProfileController = UserProfileVC(collectionViewLayout: UICollectionViewFlowLayout())
+                        userProfileController.user = user
+                        self.navigationController?.pushViewController(userProfileController, animated: true)
+                        return
+                    })
+                }
+            })
+        }
     }
     
     func fetchComments(){
