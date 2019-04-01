@@ -38,4 +38,5 @@ let NOTIFICATIONS_REF = DB_REF.child("notifications")
 
 let MESSAGES_REF = DB_REF.child("messages")
 let USER_MESSAGES_REF = DB_REF.child("user-messages")
+let HASHTAG_POST_REF = DB_REF.child("hashtag-post")
 

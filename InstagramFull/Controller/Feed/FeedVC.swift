@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import ActiveLabel
 
 private let reuseIdentifier = "Cell"
 
@@ -86,6 +87,9 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
         }   else {
                 cell.post = posts[indexPath.item]
             }
+        
+        handleHashtagTapped(forCell: cell)
+        handleUserNameLabelTapped(forCell: cell)
   
         return cell
     }
@@ -204,13 +208,35 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
         
     }
     
+    func handleHashtagTapped(forCell cell :Feedcell){
+        
+        cell.captionLabel.handleHashtagTap { (hashTag) in
+            
+            let hashtagController = HashtagController(collectionViewLayout: UICollectionViewFlowLayout())
+            hashtagController.hashtag = hashTag
+            self.navigationController?.pushViewController(hashtagController, animated: true)
+        }
+    }
+    
+    func handleUserNameLabelTapped(forCell cell : Feedcell) {
+        
+        guard let user = cell.post?.user else {return}
+        guard let userName = user.userName else {return}
+        
+        let customType = ActiveType.custom(pattern: ("^\(userName)\\b"))
+        
+        cell.captionLabel.handleCustomTap(for: customType) { (_) in
+            let userProfileController = UserProfileVC(collectionViewLayout: UICollectionViewFlowLayout())
+            userProfileController.user = user
+            self.navigationController?.pushViewController(userProfileController , animated: true)
+        }
+    }
     
     func configureNavigationBar(){
         
         if !viewSinglePost {
             
               self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogOut))
-            
         }
       
         

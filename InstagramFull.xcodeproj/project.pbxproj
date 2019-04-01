@@ -32,6 +32,8 @@
 		BCB5B87C22456517001FD10A /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB5B87B22456517001FD10A /* ChatController.swift */; };
 		BCB5B87E22456666001FD10A /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB5B87D22456666001FD10A /* ChatCell.swift */; };
 		BCB5D7772219C431006E66F5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB5D7762219C431006E66F5 /* Constants.swift */; };
+		BCB919EF22527FF2000C99D5 /* HashtagController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB919EE22527FF2000C99D5 /* HashtagController.swift */; };
+		BCB919F122528165000C99D5 /* HashtagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB919F022528165000C99D5 /* HashtagCell.swift */; };
 		BCC2A0AF2229B92400E5F72C /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC2A0AE2229B92400E5F72C /* NotificationCell.swift */; };
 		BCCCBFE62229538800EED37E /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCCBFE52229538800EED37E /* Comment.swift */; };
 		BCD8273322154F1B0030B81E /* MainTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD8273222154F1B0030B81E /* MainTabVC.swift */; };
@@ -78,6 +80,8 @@
 		BCB5B87B22456517001FD10A /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		BCB5B87D22456666001FD10A /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		BCB5D7762219C431006E66F5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		BCB919EE22527FF2000C99D5 /* HashtagController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagController.swift; sourceTree = "<group>"; };
+		BCB919F022528165000C99D5 /* HashtagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagCell.swift; sourceTree = "<group>"; };
 		BCC2A0AE2229B92400E5F72C /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		BCCCBFE52229538800EED37E /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		BCD8273222154F1B0030B81E /* MainTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabVC.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 				BC8C01852228619C0057B85E /* CommentCell.swift */,
 				BCC2A0AE2229B92400E5F72C /* NotificationCell.swift */,
 				BC9719462243F5070077D697 /* SearchPostCell.swift */,
+				BCB919F022528165000C99D5 /* HashtagCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -244,6 +249,7 @@
 			children = (
 				BCD82734221551AA0030B81E /* FeedVC.swift */,
 				BC8C0183222860D20057B85E /* CommentVC.swift */,
+				BCB919EE22527FF2000C99D5 /* HashtagController.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -393,6 +399,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-InstagramFull/Pods-InstagramFull-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ActiveLabel/ActiveLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
@@ -402,6 +409,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActiveLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
@@ -436,6 +444,7 @@
 				BC36101B221D84EA00C07713 /* SelectPhotoCell.swift in Sources */,
 				BCB5B8762244FC85001FD10A /* NewMessageController.swift in Sources */,
 				BCEA0604221883B300D7B93E /* SearchUserCell.swift in Sources */,
+				BCB919F122528165000C99D5 /* HashtagCell.swift in Sources */,
 				BC1C72A7221F29F8002E18D4 /* UserPostCell.swift in Sources */,
 				BC8C01862228619C0057B85E /* CommentCell.swift in Sources */,
 				BCD8273D221552150030B81E /* UserProfileVC.swift in Sources */,
@@ -455,6 +464,7 @@
 				BCB5D7772219C431006E66F5 /* Constants.swift in Sources */,
 				BCCCBFE62229538800EED37E /* Comment.swift in Sources */,
 				BCD82737221551CA0030B81E /* SearchVC.swift in Sources */,
+				BCB919EF22527FF2000C99D5 /* HashtagController.swift in Sources */,
 				BCB5B87C22456517001FD10A /* ChatController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
