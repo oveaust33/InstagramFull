@@ -90,6 +90,7 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
         
         handleHashtagTapped(forCell: cell)
         handleUserNameLabelTapped(forCell: cell)
+        handleMentionedTapped(forCell: cell)
   
         return cell
     }
@@ -215,6 +216,13 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
             let hashtagController = HashtagController(collectionViewLayout: UICollectionViewFlowLayout())
             hashtagController.hashtag = hashTag
             self.navigationController?.pushViewController(hashtagController, animated: true)
+        }
+    }
+    
+    func handleMentionedTapped (forCell cell : Feedcell){
+        
+        cell.captionLabel.handleMentionTap { (username) in
+            self.getMentionedUser(WithUserName: username)
         }
     }
     

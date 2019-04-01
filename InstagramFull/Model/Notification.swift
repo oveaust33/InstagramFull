@@ -15,6 +15,8 @@ class Notification {
         case Like
         case Comment
         case Follow
+        case CommentMention
+        case PostMention
         
         var description: String {
             
@@ -23,6 +25,8 @@ class Notification {
             case .Like : return " Liked your post"
             case .Comment : return " commented on your post"
             case .Follow : return " started following you"
+            case .CommentMention : return " mentioned u in a comment"
+            case .PostMention : return " mentioned u in a post"
                 
             }
         }
@@ -32,6 +36,8 @@ class Notification {
             case 0: self = .Like
             case 1: self = .Comment
             case 2: self = .Follow
+            case 3: self = .CommentMention
+            case 4: self = .PostMention
             default: self = .Like
             }
         }

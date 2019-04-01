@@ -33,6 +33,8 @@ let COMMENT_REF = DB_REF.child("comments")
 let LIKE_INT_VALUE = 0
 let COMMENT_INT_VALUE = 1
 let FOLLOW_INT_VALUE = 2
+let COMMENT_MENTION_INT_VALUE = 3
+let POST_MENTION_INT_VALUE = 4
 
 let NOTIFICATIONS_REF = DB_REF.child("notifications")
 
