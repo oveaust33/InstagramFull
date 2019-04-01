@@ -93,7 +93,12 @@ class ChatController : UICollectionViewController , UICollectionViewDelegateFlow
     //  MARK: - UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width/2, height: 50)
+        
+        var height : CGFloat = 80
+        let message = messages[indexPath.item]
+        height = estimateFrameForText(message.messageText).height + 20
+        
+        return CGSize(width: view.frame.width, height: height)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -102,7 +107,9 @@ class ChatController : UICollectionViewController , UICollectionViewDelegateFlow
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! Chatcell
+        cell.message = messages[indexPath.item]
         
+        configureMessage(cell: cell, message: messages[indexPath.item])
         return cell
     }
     
@@ -118,9 +125,45 @@ class ChatController : UICollectionViewController , UICollectionViewDelegateFlow
     
     @objc func handleInfoTapped(){
         
-        print("info handle tapped")
+        let userProfileController = UserProfileVC(collectionViewLayout: UICollectionViewFlowLayout())
+        userProfileController.user = user
+        navigationController?.pushViewController(userProfileController, animated: true)
+    }
     
+    func estimateFrameForText(_ text : String) -> CGRect{
+        
+        let size = CGSize(width: 200, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
+        
+    }
     
+    func configureMessage(cell : Chatcell , message : Message){
+        
+        guard let currentUid = Auth.auth().currentUser?.uid else {return}
+        
+        cell.bubbleViewWidthAnchor?.constant = estimateFrameForText(message.messageText).width + 32
+        cell.frame.size.height = estimateFrameForText(message.messageText).height + 20
+        
+        if message.fromId == currentUid {
+            
+            cell.bubbleViewRightAnchor?.isActive = true
+            cell.bubbleViewLeftAnchor?.isActive = false
+            cell.bubbleView.backgroundColor = UIColor.rgb(red: 0, green: 137, blue: 249)
+            cell.textView.textColor = .white
+            cell.profileImageView.isHidden = true
+            
+        } else {
+            
+            cell.bubbleViewRightAnchor?.isActive = false
+            cell.bubbleViewLeftAnchor?.isActive = true
+            cell.bubbleView.backgroundColor = UIColor.rgb(red: 240, green: 240, blue: 240)
+            cell.textView.textColor = .black
+            cell.profileImageView.isHidden = false
+            
+            
+        }
+        
     }
     
     func configureNavigationBar(){
@@ -179,5 +222,4 @@ class ChatController : UICollectionViewController , UICollectionViewDelegateFlow
             self.collectionView.reloadData()
         }
     }
-
 }
