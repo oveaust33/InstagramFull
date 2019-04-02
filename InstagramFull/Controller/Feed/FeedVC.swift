@@ -129,7 +129,7 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
  
         guard let post = cell.post else {return}
         
-        if post.didLike{
+        if post.didLike {
             //handle unlike a post
             if !isDoubleTapped {
                 post.adjustLikes(addLike: false) { (likes) in
@@ -146,14 +146,12 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
                 cell.likesLabel.text = "\(likes) likes"
                 cell.likeButton.setImage(UIImage(named: "like_selected"), for: .normal)
                 cell.likeButton.tintColor = .red
-                
             }
         }
     }
     
     
     func handleShowLikes(for cell: Feedcell) {
-        
         
         guard let post = cell.post else {return}
         guard let postId = post.postId else {return}
@@ -185,8 +183,6 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
                 cell.likeButton.setImage(UIImage(named: "like_unselected"), for: .normal)
                 cell.likeButton.tintColor = .black
                 
-                
-                
             }
         }
         
@@ -207,6 +203,7 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     
     @objc func handleRefresh(){
         posts.removeAll(keepingCapacity: false)
+        self.currentKey = nil
         fetchPosts()
         collectionView.reloadData()
     }
@@ -348,6 +345,8 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
                 guard let first = snapshot.children.allObjects.first as? DataSnapshot else {return}
                 guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else {return}
                 
+               // self.collectionView.refreshControl?.endRefreshing()
+                
                 allObjects.forEach({ (snapshot) in
                     let postId = snapshot.key
                     if postId != self.currentKey {
@@ -371,7 +370,4 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
             self.collectionView.reloadData()
         }
     }
-    
-    
-  
 }

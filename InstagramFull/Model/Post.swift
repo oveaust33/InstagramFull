@@ -83,7 +83,7 @@ class Post {
             //observe DB for notification ID to remove
             USER_LIKES_REF.child(currentUid).child(postId).observeSingleEvent(of: .value) { (snapshot) in
                 
-                //notificationID to remove drom server
+                //notificationID to remove from server
                 guard let notificationId = snapshot.value as? String else {return}
                 
                 //Remove notification from server
@@ -103,7 +103,6 @@ class Post {
                             
                         })
                     })
-                    
                 })
             }
         }
@@ -132,7 +131,6 @@ class Post {
             notoficationRef.updateChildValues(values) { (err, ref) in
                 USER_LIKES_REF.child(currentUid).child(self.postId).setValue(notoficationRef.key)
             }
-            
         }
     }
  

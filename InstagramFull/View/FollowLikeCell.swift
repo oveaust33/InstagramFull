@@ -42,7 +42,6 @@ class FollowLikeCell: UITableViewCell {
                     
                     //config follow button for non-followed user
                     self.followButton.configure(didFollow: false)
-
                 }
             })
             
