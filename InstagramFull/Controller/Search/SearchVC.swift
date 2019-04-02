@@ -20,6 +20,8 @@ class SearchVC: UITableViewController,UISearchBarDelegate , UICollectionViewDele
     var collectionView : UICollectionView!
     var collectionViewEnabled = true
     var posts = [Post]()
+    var currentKey : String?
+    var userCurrentKey : String?
     
     
     private let reuseIdentifier = "searchUserCell"
@@ -41,8 +43,6 @@ class SearchVC: UITableViewController,UISearchBarDelegate , UICollectionViewDele
         
         //seperator insets
         tableView.separatorInset = UIEdgeInsets (top: 0, left: 64, bottom: 0, right: 0)
-        
-        fetchUser()
 
     }
 
@@ -62,17 +62,23 @@ class SearchVC: UITableViewController,UISearchBarDelegate , UICollectionViewDele
         }
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if users.count>3 {
+            
+            if indexPath.item == users.count - 1 {
+                
+                self.fetchUser()
+            }
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! SearchUserCell
         
         var user : User!
-        
         if inSearchMode {
-            
             user = filteredUsers[indexPath.row]
-            
         } else {
-            
             user = users[indexPath.row]
         }
         
@@ -147,12 +153,24 @@ class SearchVC: UITableViewController,UISearchBarDelegate , UICollectionViewDele
         return posts.count
     }
     
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if posts.count > 20 {
+            if indexPath.item == posts.count - 1{
+                self.fetchPost()
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchPostCell", for: indexPath) as! SearchPostCell
         cell.post = posts[indexPath.item]
         
         return cell
     }
+    
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let feedVC = FeedVC(collectionViewLayout : UICollectionViewFlowLayout())
@@ -177,6 +195,8 @@ class SearchVC: UITableViewController,UISearchBarDelegate , UICollectionViewDele
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
+        
+        fetchUser()
         
         collectionView.isHidden = true
         collectionViewEnabled = false
@@ -221,30 +241,89 @@ class SearchVC: UITableViewController,UISearchBarDelegate , UICollectionViewDele
     //MARK: - API
     
     func fetchUser() {
-        Database.database().reference().child("users").observe(.childAdded) { (snapshot) in
-            //childadded is to observe all the values in Database
-            //print(snapshot)
+        
+        if userCurrentKey == nil {
             
-            //uid
-            let uid = snapshot.key
-            Database.fetchUser(with: uid, completion: { (user) in
+            USER_REF.queryLimited(toLast: 4).observeSingleEvent(of: .value) { (snapshot) in
                 
-                self.users.append(user)
+                guard let first = snapshot.children.allObjects.first as? DataSnapshot else {return}
+                guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else {return}
                 
-                self.tableView.reloadData()
-            })
+                allObjects.forEach({ (snapshot) in
+                    
+                    let uid = snapshot.key
+                    Database.fetchUser(with: uid, completion: { (user) in
+                        self.users.append(user)
+                        self.tableView.reloadData()
+                    })
+                })
+                self.userCurrentKey = first.key
+            }
+        } else {
+            
+            USER_REF.queryOrderedByKey().queryEnding(atValue: self.userCurrentKey).queryLimited(toLast: 5).observeSingleEvent(of: .value) { (snapshot) in
+                
+                guard let first = snapshot.children.allObjects.first as? DataSnapshot else {return}
+                guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else {return}
+                
+                allObjects.forEach({ (snapshot) in
+                    
+                    let uid = snapshot.key
+                    
+                    if uid != self.userCurrentKey{
+                       
+                        Database.fetchUser(with: uid, completion: { (user) in
+                            
+                            self.users.append(user)
+                            self.tableView.reloadData()
+                        })
+                    }
+                })
+                
+                self.userCurrentKey = first.key
+            }
         }
     }
     
     func fetchPost(){
-        posts.removeAll()
-        POSTS_REF.observe(.childAdded) { (snapshot) in
+        
+        if currentKey == nil {
             
-            let postId = snapshot.key
-            Database.fetchPost(with: postId, completion: { (post) in
-                self.posts.append(post)
-                self.collectionView.reloadData()
-            })
+            POSTS_REF.queryLimited(toLast: 21).observeSingleEvent(of: .value) { (snapshot) in
+                
+                guard let first = snapshot.children.allObjects.first as? DataSnapshot else {return}
+                guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else {return}
+                
+                allObjects.forEach({ (snapshot) in
+                    
+                    let postId = snapshot.key
+                    Database.fetchPost(with: postId, completion: { (post) in
+                        self.posts.append(post)
+                        self.collectionView.reloadData()
+                    })
+                })
+                self.currentKey = first.key
+            }
+        } else {
+            
+            //paginate here
+            POSTS_REF.queryOrderedByKey().queryEnding(atValue: self.currentKey).queryLimited(toLast: 10).observeSingleEvent(of: .value) { (snapshot) in
+                
+                guard let first = snapshot.children.allObjects.first as? DataSnapshot else {return}
+                guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else {return}
+                
+                allObjects.forEach({ (snapshot) in
+                    let postId = snapshot.key
+                    if postId != self.self.currentKey {
+                        
+                        Database.fetchPost(with: postId, completion: { (post) in
+                            self.posts.append(post)
+                            self.collectionView.reloadData()
+                        })
+                    }
+                })
+                self.currentKey = first.key
+            }
         }
     }
 }
