@@ -50,8 +50,6 @@ class NotificationCell: UITableViewCell {
     
     let notificationlabel : UILabel = {
         let label = UILabel()
-
-        
         label.numberOfLines = 2
         
         return label
