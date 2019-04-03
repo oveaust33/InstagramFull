@@ -36,7 +36,6 @@ class NotificationVC: UITableViewController, NotificationCellDelegate {
         //fetch notification
         fetchNotification()
         
-        
     }
 
     // MARK: - Table view data source

@@ -122,7 +122,42 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     }
     
     func handleOptionsTapped(for cell: Feedcell) {
-        print("User options Tapped")
+        
+        guard let post = cell.post else {return}
+        
+        if post.ownerUid == Auth.auth().currentUser?.uid {
+            
+            let alerController = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
+            
+            alerController.addAction(UIAlertAction(title: "Delete Post", style: .destructive, handler: { (_) in
+                //Delete post
+                
+                post.deletePost()
+                
+                if self.viewSinglePost {
+                    
+                    self.handleRefresh()
+                } else {
+                    
+                    _ = self.navigationController?.popViewController(animated: true)
+                }
+                
+            }))
+            
+            alerController.addAction(UIAlertAction(title: "Edit post", style: .default, handler: { (_) in
+                
+                print("Edit post tapped")
+            }))
+            
+            alerController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            self.present(alerController, animated: true, completion: nil)
+            
+        } else {
+            
+            
+        }
+
 
     }
     
