@@ -123,9 +123,9 @@ class SelectImageVC : UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     @objc func handleNext(){
-        print("Handle next Tapped ....")
         let uploadPostVC = UploadPostVC()
         uploadPostVC.selectedImage = self.header?.photoImageView.image //get the real pixel of image,we could use SelectedImage
+        uploadPostVC.uploadAction = UploadPostVC.UploadAction(index: 0)
         navigationController?.pushViewController(uploadPostVC, animated: true)
         
     }

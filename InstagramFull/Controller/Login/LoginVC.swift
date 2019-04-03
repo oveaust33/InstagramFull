@@ -138,6 +138,11 @@ class LoginVC: UIViewController {
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             //handle error
             if let error = error {
+                
+                let alerController = UIAlertController(title: "Error", message: "Incorrect Email/Password", preferredStyle: .actionSheet)
+                alerController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                self.present(alerController, animated: true, completion: nil)
+                self.activityIndicator.stopAnimating()
                 print("unable to sign in with error",error.localizedDescription)
                 return
             }

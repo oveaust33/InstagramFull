@@ -21,6 +21,7 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
     var viewSinglePost = false
     var post : Post?
     var currentKey : String?
+    var userProfileController : UserProfileVC?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,10 +43,11 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
         if !viewSinglePost {
             self.fetchPosts()
         }
-        
+
         updateUserFeeds()
 
     }
+
 
     //  MARK: - UICollectionView Flow Layout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -134,31 +136,42 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
                 
                 post.deletePost()
                 
-                if self.viewSinglePost {
+                if !self.viewSinglePost {
                     
                     self.handleRefresh()
-                } else {
+                }
                     
-                    _ = self.navigationController?.popViewController(animated: true)
+                else {
+                    
+                    if let userProfileController = self.userProfileController {
+                        
+                        _ = self.navigationController?.popViewController(animated: true)
+                        userProfileController.handleRefresh()
+                    }
                 }
                 
             }))
             
             alerController.addAction(UIAlertAction(title: "Edit post", style: .default, handler: { (_) in
                 
-                print("Edit post tapped")
+                let uploadPostController = UploadPostVC()
+                let navigationController = UINavigationController(rootViewController: uploadPostController)
+                uploadPostController.postToEdit = post
+                uploadPostController.uploadAction = UploadPostVC.UploadAction(index: 1)
+                self.navigationController?.pushViewController(uploadPostController, animated: true)
+                self.present(navigationController, animated: true, completion: nil)
+                
             }))
             
             alerController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
             self.present(alerController, animated: true, completion: nil)
             
-        } else {
+            } else {
             
-            
+            let alerController = UIAlertController(title: "Cancel", message: nil, preferredStyle: .actionSheet)
+            alerController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alerController, animated: true, completion: nil)
         }
-
-
     }
     
     func handleLikeTapped(for cell: Feedcell , isDoubleTapped : Bool) {

@@ -29,6 +29,9 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
 
         self.collectionView.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerIdentifier)
         
+        //configure refresh controll
+        configureRefreshControll()
+        
 
         
         //change Background color
@@ -41,8 +44,6 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         //fetch posts
         fetchPost()
         
-
-
     }
     
     // MARK: - UICollectionView FlowLayout
@@ -127,7 +128,7 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         
         let feedVC = FeedVC(collectionViewLayout : UICollectionViewFlowLayout())
         feedVC.viewSinglePost = true
-        
+        feedVC.userProfileController = self
         feedVC.post = posts[indexPath.item]
         
         navigationController?.pushViewController(feedVC, animated: true)
@@ -232,6 +233,20 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         }
     }
     
+    //  MARK: - Handlers
+    
+    func configureRefreshControll(){
+        let refreshControll = UIRefreshControl()
+        refreshControll.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView.refreshControl = refreshControll
+    }
+    
+    @objc func handleRefresh(){
+        posts.removeAll(keepingCapacity: false)
+        self.currentKey = nil
+        fetchPost()
+        collectionView.reloadData()
+    }
     
     
     

@@ -13,13 +13,31 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
     
     //  Mark: - Properties
     
-    var selectedImage : UIImage?
+    enum UploadAction {
+        
+        case uploadPost
+        case saveChanges
+        
+        init(index : Int) {
+            
+            switch index {
+            case 0 : self = .uploadPost
+            case 1 : self = .saveChanges
+            default : self = .uploadPost
+                
+            }
+        }
+    }
     
-    let photoImageView : UIImageView = {
-        let iv = UIImageView()
+    var selectedImage : UIImage?
+    var postToEdit : Post?
+    var uploadAction : UploadAction!
+    
+    let photoImageView : CustomImageView = {
+        let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.backgroundColor = .red
+        iv.backgroundColor = .lightGray
         iv.layer.cornerRadius = 3
         iv.layer.masksToBounds = true
         
@@ -44,19 +62,20 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
         return tv
     }()
     
-    let shareButton : UIButton = {
+    let actionButton : UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
         button.setTitle("Publish", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 5
-        button.addTarget(self, action: #selector(handleSharePost), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleUploadAction), for: .touchUpInside)
         button.isEnabled = false
         
         return button
     }()
     
-
+    //MARK: - Init
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,23 +96,52 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if uploadAction == .saveChanges{
+            
+            guard let post = self.postToEdit else {return}
+            actionButton.setTitle("Save Changes", for: .normal)
+            self.navigationItem.title = "Edit Post"
+            navigationController?.navigationBar.tintColor = .black
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+            photoImageView.loadImage(with: post.imageUrl)
+            captionTextView.text = post.caption
+            
+        } else {
+            
+            self.navigationItem.title = "Upload Post"
+
+            actionButton.setTitle("Share", for: .normal)
+            
+        }
+       
+    }
+    
     //  MARK: - UITextView
     
     func textViewDidChange(_ textView: UITextView) {
         
         guard !textView.text.isEmpty else {
             
-            shareButton.isEnabled = false
-            shareButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
+            actionButton.isEnabled = false
+            actionButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
             return
         }
         
-        shareButton.isEnabled = true
-        shareButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
+        actionButton.isEnabled = true
+        actionButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
 
     }
     
     //  MARK: - Handlers
+    
+    @objc func handleCancel(){
+        
+        self.dismiss(animated: true, completion: nil)
+    
+    }
     
     func updateUserFeeds(with postId : String){
         
@@ -114,7 +162,40 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
         
     }
     
-    @objc func handleSharePost(){
+    @objc func handleUploadAction(){
+        
+        buttonSelector(uploadAction: uploadAction)
+        
+    }
+    
+    func buttonSelector(uploadAction : UploadAction){
+        
+        switch uploadAction {
+ 
+        case .uploadPost:
+            handleUploadPost()
+        case .saveChanges:
+            handleSavePostChanges()
+        }
+    }
+    
+    func handleSavePostChanges(){
+        
+        guard let post = postToEdit else {return}
+        guard let postId = post.postId else {return}
+        let updatedCaption = captionTextView.text
+        
+        uploadHashtagToServer(withPostId: postId)
+        
+        POSTS_REF.child(postId).child("caption").setValue(updatedCaption) { (err, ref) in
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }
+        
+    }
+    
+    func handleUploadPost(){
         
         activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
@@ -131,7 +212,7 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
         
         //Image Upload data
         guard let uploadData = postImage.jpegData(compressionQuality: 0.5) else {return}
-      
+        
         //update Storege
         let fileName = NSUUID().uuidString
         
@@ -154,23 +235,23 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
                     return
                 }
                 
-            //post Data
-            let values =    ["caption"        : caption      ,
-                              "creationDate"  : creationDate ,
-                              "likes"         : 0            ,
-                              "imageUrl"      : postImageUrl ,
-                              "ownerUid"      : currentUid]    as [String : Any]
+                //post Data
+                let values =    ["caption"        : caption      ,
+                                 "creationDate"  : creationDate ,
+                                 "likes"         : 0            ,
+                                 "imageUrl"      : postImageUrl ,
+                                 "ownerUid"      : currentUid]    as [String : Any]
                 
                 //post id
                 let postId = POSTS_REF.childByAutoId()
                 
                 guard let postKey = postId.key else { return }
                 
-//                //update USER-POST structure
-//                USER_POSTS_REF.child(currentUid).updateChildValues([postKey : 1])
-//
-//                //update feed structure
-//                self.updateUserFeeds(with: postKey)
+                //                //update USER-POST structure
+                //                USER_POSTS_REF.child(currentUid).updateChildValues([postKey : 1])
+                //
+                //                //update feed structure
+                //                self.updateUserFeeds(with: postKey)
                 
                 //upload info to database
                 postId.updateChildValues(values, withCompletionBlock: { (error, ref) in
@@ -210,8 +291,8 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
         view.addSubview(captionTextView)
         captionTextView.anchor(top: view.topAnchor, left: photoImageView.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 92, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 100)
         
-        view.addSubview(shareButton)
-        shareButton.anchor(top: photoImageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 40)
+        view.addSubview(actionButton)
+        actionButton.anchor(top: photoImageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 12, paddingLeft: 24, paddingBottom: 0, paddingRight: 24, width: 0, height: 40)
         
     }
     
