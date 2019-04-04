@@ -158,7 +158,6 @@ class FeedVC: UICollectionViewController,UICollectionViewDelegateFlowLayout , Fe
                 let navigationController = UINavigationController(rootViewController: uploadPostController)
                 uploadPostController.postToEdit = post
                 uploadPostController.uploadAction = UploadPostVC.UploadAction(index: 1)
-                //self.navigationController?.pushViewController(uploadPostController, animated: true)
                 self.present(navigationController, animated: true, completion: nil)
                 
             }))

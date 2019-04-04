@@ -57,7 +57,6 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.layer.cornerRadius = 5
         tv.layer.masksToBounds = true
-    
         
         return tv
     }()
@@ -112,11 +111,8 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
         } else {
             
             self.navigationItem.title = "Upload Post"
-
             actionButton.setTitle("Share", for: .normal)
-            
         }
-       
     }
     
     //  MARK: - UITextView
@@ -166,6 +162,7 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
         
         buttonSelector(uploadAction: uploadAction)
         
+        
     }
     
     func buttonSelector(uploadAction : UploadAction){
@@ -180,19 +177,19 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
     }
     
     func handleSavePostChanges(){
-        
+        activityIndicator.isHidden = false
         guard let post = postToEdit else {return}
         guard let postId = post.postId else {return}
+        //guard let postIdKey = POSTS_REF.childByAutoId().key else {return}
         let updatedCaption = captionTextView.text
         
         uploadHashtagToServer(withPostId: postId)
         
         POSTS_REF.child(postId).child("caption").setValue(updatedCaption) { (err, ref) in
             
+            self.activityIndicator.startAnimating()
             self.dismiss(animated: true, completion: nil)
-            
         }
-        
     }
     
     func handleUploadPost(){
@@ -262,7 +259,6 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
                     //update feed structure
                     self.updateUserFeeds(with: postKey)
                     
-                    
                     //upload hashtag to server
                     self.uploadHashtagToServer(withPostId: postKey)
                     
@@ -277,8 +273,6 @@ class UploadPostVC: UIViewController , UITextViewDelegate {
                         self.tabBarController?.selectedIndex = 0
                     })
                 })
-                
-                
             })
         })
     }
