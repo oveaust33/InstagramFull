@@ -161,7 +161,13 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         guard let user = header.user else {return}
         
         if header.editProfileFollowButton.titleLabel?.text == "Edit Profile" {
-            print ("Handle Edit Profile")
+            
+            let editProfileController = EditProfileController()
+            editProfileController.user = user
+            editProfileController.userProfileController = self
+            let navigationController = UINavigationController(rootViewController: editProfileController)
+            present(navigationController, animated: true, completion: nil)
+            
         } else {
             if header.editProfileFollowButton.titleLabel?.text == "Follow" {
                 
@@ -247,7 +253,6 @@ class UserProfileVC: UICollectionViewController , UICollectionViewDelegateFlowLa
         fetchPost()
         collectionView.reloadData()
     }
-    
     
     
     

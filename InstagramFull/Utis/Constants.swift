@@ -9,6 +9,7 @@
 import Firebase
 
 
+
 //ROOT : REFFERENCES
 let DB_REF = Database.database().reference()
 let STORAGE_REF = Storage.storage().reference()
@@ -41,4 +42,12 @@ let NOTIFICATIONS_REF = DB_REF.child("notifications")
 let MESSAGES_REF = DB_REF.child("messages")
 let USER_MESSAGES_REF = DB_REF.child("user-messages")
 let HASHTAG_POST_REF = DB_REF.child("hashtag-post")
+
+//  MARK: - STORAGE REFFERENCES
+
+let STORAGE_PROFILE_IMAGES_REF = STORAGE_REF.child("profile_images")
+let STORAGE_MESSAGE_IMAGES_REF = STORAGE_REF.child("message_images")
+let STORAGE_MESSAGE_VIDEO_REF = STORAGE_REF.child("video_messages")
+let STORAGE_POST_IMAGES_REF = STORAGE_REF.child("post_images")
+
 
